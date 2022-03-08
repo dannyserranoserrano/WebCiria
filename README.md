@@ -74,4 +74,15 @@
             - **Visualizar una** actividad de entre todas **.get (/findActivity/:id):** Desde aquí podrás visualizar una actividad que desees. Para realizarlo, deberas previamente, **Loguearte** como usuario. 
         
 * *CARPETA **MODELS:*** 
-    * En esta carpeta guardamos todos los archivos JSON con los modelos que vamos a utilizar.     Estos modelos se relacionarán con los archivos Router comentados anteriormente.
+    * En esta carpeta guardamos todos los archivos JSON con los modelos que vamos a utilizar. Estos modelos se relacionarán con los archivos **Router** comentados anteriormente. Se encuentra el esquema (Schema) con los datos que contrandrá el servidor.
+            - **User**
+            - **Reserve**
+            - **Payment**
+            - **File**
+            - **Event**
+            - **Activity**
+
+* *CARPETA **MIDDLEWARE***
+    * Aqui guardamos los archivos relacionados con la creacción del **Token de Autentificación** para acceder como usuarios, así como la creación del role de **Admiinistrador**
+            - **auth**
+            - **authAdmin**
