@@ -106,52 +106,6 @@ console.log(id)
     }
 })
 
-
-// *****AÑADIMOS PARTICIPANTES A UNA RESERVA*****
-ReserveRouter.put("/updateReserve/:id",auth,async (req, res) => {
-    // *****Añadimos Id de la reserva*****
-    const {
-        id
-    } = req.params
-    // *****Añadimos Id del nuevo participante*****
-    const {
-        participatingId,
-    } = req.body
-
-    try {
-        let reserve = await Reserve.findById(id);
-        // *****Buscamos errores*****
-        if (!reserve) {
-            return res.status(400).send({
-                success: false,
-                message: "Esta reserva no existe"
-            })
-        };
-
- 
-// *****Añade el nuevo participante*****
-        reserve = await Reserve.findByIdAndUpdate(
-            id, {
-                $push: {
-                    participating: participatingId,
-                }
-            }, {
-                new: true,
-            }
-        );
-        res.status(200).send({
-            success: true,
-            message: "Participant added to the reservation",
-            reserve
-        });
-    } catch (error) {
-        return res.status(500).send({
-            success: false,
-            message: error.message
-        });
-    }
-});
-
 // ****BORRAMOS RESERVA*****
 ReserveRouter.delete("/deleteReserve/:id",auth,authAdmin,async (req, res) => {
     const {
