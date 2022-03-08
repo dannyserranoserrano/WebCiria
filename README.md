@@ -33,9 +33,9 @@
 
 ## **Reparto de archivos en carpetas:**
 
-- *CARPETA **API:***
-* En dicha carpeta se almacenan todos los archivos JSON referentes a las rutas de los modelos, que serán
-las encargadas de crear los enlaces a las diferentes funciones.
+* *CARPETA **API:***
+    * En dicha carpeta se almacenan todos los archivos JSON referentes a las rutas de los modelos, que serán las encargadas de crear los enlaces a las diferentes funciones.
+
         - ***UserRouter:*** Este archivo contiene las rutas para crear un nuevo usuario, visualizar todos los usuarios, visualizar un solo usuario, modificar los datos de usuario, borrar un usuario o loguearte para entrar en la aplicación.
             - **Crear** nuevo usuario **.post(/users):** Este enlace nos permite introducir nuestros datos para poder registrarnos y acceder a mas opciones. Para realizar esto no es necesario tener **ningun permiso** en especial, se realiza desde la página principal, introduciendo Nombre y apellido, correo electrónico, ciudad de residencia y contraseña. 
             - **Modificar** los datos de usuario **.put(/updateUser/:id):** Desde aqui podremos modificar nuestros datos no esenciales tales como **Nombre, Apellido y Ciudad** de residencia. El correo electrónico no se podra modificar ya que es éste quien nos otorga el usuario. La opción de modificar datos unicamente se podrá realizar si previamente te has **logueado** como usuario en la cuenta.
@@ -43,24 +43,29 @@ las encargadas de crear los enlaces a las diferentes funciones.
             - **Visualizar todos** los usuarios **.get(/users):** Desde esta ruta podremos visualizar la lista de usuarios registrados en el sistema. Esta ruta es exclusica del **administrador**, por ello tendremos que habernos logueado como tal para realizar dicha operación.
             - **Visualizar un** usuario **.get(/findUser/:id):** Desde esta ruta podremos visualizar todos nuestro datos registrados. Para ello necesitas haberte **logueado** como usuario previamente. 
             - **Loguearte** como usuario/administrador **.post(/login):** Este es el paso previo para poder acceder. Aquí introduciremos nuestro correo electrónico y password y nos dará la posibilidad de realizar las funciones principales de la aplicación. al igual que el registro se realiza desde la página principal **sin haber realizado** ningun paso previo.
+
         - ***ReserveRouter:*** En este archivo tenemos las rutas para crear reservas, añadirnos como participantes de de un evento, visualizar todos los datos o uno en especifico, o borrar la reserva.
             - **Crear** nueva reserva **.post(/newReserve/:eventId):** Desde aqui crearemos una nueva reserva e inscribiremos al primer participante, para despues, que se puedan ir inscribiendo nuevos participantes. Para ello deberemos insertar el evento al que va relacionado así como el primer participante que lo realizará. Para todo ello debemos habernos inscrito y **logueado** en el sistema como usuario.
             - **Borrar** una reserva **.delete(/deleteReserve/:id):** Con esta ruta podremos borra una reserva. Para ello necesitamos ser **administrador** del sistema y estar logueados.
             - **Visualizar todas** las reservas **.get(/reserves):** Aqui se podrán revisar todas las reservas creadas. Para ello deberás ser **administrador** y estar logueado en el sistema. 
             - **Visualizar una** reserva **.get(/findReserve/:id):** quí podremos visualizar la reserva en la que estoy inscrito. Para ello deberemos estar **logueados** en el sistema. 
+
         - ***PaymentRouter:*** Este archivo contiene el sistema de pago *****FALTA CONCRETAR*****.  
+
         - ***FileRouter:*** En este archivo se encuentran las rutas para insertar imágenes asociadas a un evento, tambien podremos modificar, borrar, o visualizar dichas imágenes.
             - **Crear** o subir un nuevo archivo **.post(/newFile):** Desde aquí podremos subir imágenes a nuestro servidor, para ello además de seleccionar el archivo desde nuestras carpetas, necesitaremos añadir **Nombre** del archivo, **Descripción** de la imágen, **Fecha** de la obtención de la imagen, **Usuario** que la ha realizado y **Evento** al que pertenece. Para realizar esto debemos estar **logueados** como usuarios. 
             - **Modificar** datos del archivo **.put(/updateFile/:id):** Aquí podremos modificar datos insertados en el archivo tales como el **nombre** del archivo, la **descripción** de la imagen o la **fecha** de la toma de la imagen. Esto lo podrá realizar el usuario registrado y **logueado** que ha proporcionado dicha imagen.
             - **Borrar** un archivo **.delete(/deleteFile/:id):** Con esta ruta se puede borrar el archivo que deseemos. Esto solo puede realizarlo el **administrador** estando logueado.
             - **Visualizar todos** los archivos subidos **.get(/files):** Desde aqui podremos visualizar las imágenes que los **usuarios** han subido al servidor. Para ello **no es necesario** estar logueado.
             - **Visualizar un** archivo subido al servidor **.get(/findFiles/:id):** Al igual que con el anterior apartado, desde aquí podrás visualizar **un solo archivo**, y para ello **no es necesario** estar logueado.
+
         - ***EventRouter:*** Aqui tenemos las rutas para crear, modificar, borrar o visualizar los eventos que se van a celebrar.           
             - **Crear** un evento **.post(/newEvent):** Con esta ruta podremos crear un evento rellenando una serie de campos como el **Tipo de actividad** que vamos a realizar, la **descripción** del evento a realizar, el **Precio** del evento en caso de que sea de pago, el **Usuario** que ha creado el evento,y la **fecha de la actividad** a realizar. Para poder realizar esto, deberas estar **logueado** como usuario. 
             - **Modificar** los datos de un evento **.put(/updateEvent/:id):** Desde esta ruta se podrán **modificar** los datos    del evento tales como la **Actividad** a realizar, la **Descripción**, del evento, el precio en caso de tenerlo, el     **Usuario** que lo ha creado y la **Fecha del evento**. Para ello debemos estar registrados y **logueados** en la     aplicación. 
             - **Borrar** un evento creado **.delete(/deleteEvent/:id):** Con esto podemos **borrar** un evento ya creado, para ello debes estar logueado y ser **administrador** de la aplicación. 
             - **Visualizar todos** los eventos **.get(/events):** Se podrán visualizar todos los eventos que estén programados, para que así el que lo desee pueda inscribirse. Para ello **no es necesario** estar logueado. 
             - **Visualizar un** evento ya creado **.get(/findEvent/:id):** También podrá visualizarse un evento concreto, y al igual que la anterior ruta, no es necesario estar logueado.
+
         - ***ActivityRouter:*** En este archivo están las rutas para crear, modificar, borrar y visualizar las actividades  genéricas que se podrán realizar. 
             - **Crear** una nueva actividad **.post(/newActivity):** Aquí podremos crear una nueva actividad que mas tarde utilizaremos para definir los eventos. En ella deberemos rellenar los siguientes campos: **Nombre de la actividad, si es de pago o no lo es.** Para realizar esta acción debes ser **Administrador** de la aplicación.
             - **Modificar** los datos de una actividad ya creada **.put(/updateActivity/:id):** Con esto puedes modificar la actividad creada previamente con los campos Nombre de la actividad y si es de pago o no lo es. Para realizar la operación debes ser **Administrador** y estar logueado. 
@@ -68,5 +73,5 @@ las encargadas de crear los enlaces a las diferentes funciones.
             - **Visualizar todas** las actividades creadas **.get(/activities):** Con ello podras visualizar todas las operaciones creadas. Se puede realizar la consultasiendo un usuario **Logueado**. 
             - **Visualizar una** actividad de entre todas **.get(/findActivity/:id):** Desde aquí podrás visualizar una actividad que desees. Para realizarlo, deberas previamente, **Loguearte** como usuario. 
         
-- *CARPETA **MODELS:*** 
-* En esta carpeta guardamos todos los archivos JSON con los modelos que vamos a utilizar.     Estos modelos se relacionarán con los archivos Router comentados anteriormente.
+* *CARPETA **MODELS:*** 
+    * En esta carpeta guardamos todos los archivos JSON con los modelos que vamos a utilizar.     Estos modelos se relacionarán con los archivos Router comentados anteriormente.
