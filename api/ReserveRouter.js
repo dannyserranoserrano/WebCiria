@@ -7,22 +7,29 @@ const Event = require("../models/Event");
 const ReserveRouter = express.Router();
 
 // *****VISUALIZAMOS TODAS LAS RESERVAS*****
-ReserveRouter.get("/reserves",auth,authAdmin,async (req, res) => {
+ReserveRouter.get("/reserves", auth, authAdmin, async (req, res) => {
     try {
-        let reserves = await Reserve.find({}).populate({path:"participating", select:"name surname"}).populate({path:"event", select:"description dateActivity"})
+        let reserves = await Reserve.find({}).populate({
+            path: "participating",
+            select: "name surname"
+        }).populate({
+            path: "event",
+            select: "name price"
+        })
+
         if (!reserves) {
-            res.status(400).send({
+            res.json({
                 success: false,
-                message: "The list of reserves is empty"
+                message: "La Lista de Reservas está vacía"
             })
         }
 
-        return res.status(200).send({
+        return res.json({
             success: true,
             reserves
         })
     } catch (error) {
-        res.status(500).send({
+        res.json({
             success: false,
             message: error.message
         })
@@ -30,25 +37,31 @@ ReserveRouter.get("/reserves",auth,authAdmin,async (req, res) => {
 })
 
 // *****VISUALIZAMOS SOLO UNA RESERVA*****
-ReserveRouter.get("/findReserve/:id",auth,async (req, res) => {
+ReserveRouter.get("/findReserve/:reserveId", auth, async (req, res) => {
     const {
-        id
+        reserveId
     } = req.params
     try {
-        let reserve = await Reserve.findById(id).populate({path:"participating", select:"name surname"}).populate({path:"event", select:"description dateActivity"})
+        let reserve = await Reserve.findById(reserveId).populate({
+            path: "participating",
+            select: "name surname"
+        }).populate({
+            path: "event",
+            select: "description"
+        })
         if (!reserve) {
-            res.status(400).send({
+            res.json({
                 success: false,
-                message: "Reserve not found"
+                message: "Reserva no encontrada"
             })
         }
-        return res.status(200).send({
+        return res.json({
             success: true,
-            message: "Reserve found",
+            message: "Reserva encontrada",
             reserve
         })
     } catch (error) {
-        res.status(500).send({
+        res.json({
             success: false,
             message: error.message
         })
@@ -58,48 +71,52 @@ ReserveRouter.get("/findReserve/:id",auth,async (req, res) => {
 
 // *****CREAMOS UNA RESERVA PARA EL EVENTO*****
 //**El usuario lo coge directamente por el tokken con req.user, y le metemos el id del evento al que nos inscribimos por parametros**
-ReserveRouter.post("/newReserve/:eventId",auth,async (req, res) => {
+ReserveRouter.post("/newReserve/:eventId", auth, async (req, res) => {
     const {
-       id
-    } = req.user
-    const {eventId} = req.params
+        id
+    } = req.user // Nos reconoce el usuario mediante el Tokken (auth.js)
+    const {
+        eventId
+    } = req.params
     try {
         let findEvent = await Event.findById(eventId)
         if (!findEvent) {
-            return res.status(400).send({
+            return res.json({
                 success: false,
-                message: "This event does not exist"
+                message: "Este evento no existe"
             })
         }
 
         let newReserve = new Reserve({
             event: eventId,
-            participating:id
+            participating: id
         })
 
-console.log(id)
-        let findUser = await findEvent.participating.find(user => user._id.equals(id))
+        console.log(id)
+        let findUser = await findEvent.participating.find(user => user._id.equals(id))//Comprueba si el usuario ya está registrado
 
-        if(findUser){
-            return res.status(400).send({
+        if (findUser) {
+            return res.json({
                 success: false,
-                message: "You are already registered in this event"
+                message: "Ya estás registrad@ en este evento"
             })
         }
 
         await Event.findByIdAndUpdate(eventId, {
-            $push: { participating:id},
-          });
+            $push: {
+                participating: id
+            },
+        });
 
         await newReserve.save()
 
-        return res.status(200).send({
+        return res.json({
             success: true,
-            message: "Reservation created",
+            message: "Te has registrado como participante de este evento",
             newReserve
         })
     } catch (error) {
-        res.status(500).send({
+        res.json({
             success: false,
             message: error.message
         })
@@ -107,19 +124,28 @@ console.log(id)
 })
 
 // ****BORRAMOS RESERVA*****
-ReserveRouter.delete("/deleteReserve/:id",auth,authAdmin,async (req, res) => {
+ReserveRouter.delete("/deleteReserve/:reserveId", auth, async (req, res) => {
     const {
-        id
+        reserveId
     } = req.params
     try {
-        await Reserve.findByIdAndDelete(id)
-        return res.status(200).send({
+        let findUser = await findEvent.participating.find(user)
+        if(!userCreateId.userCreate === id){
+            res.status(400).json({
+                success: false,
+                message: "No puedes borrar la reserva porque no es tuya"
+            })
+        }
+
+
+        await Reserve.findByIdAndDelete(reserveId)
+        return res.json({
             success: true,
-            message: "The reserve has been deleted"
+            message: "La reserva ha sido eliminada"
         })
 
     } catch (error) {
-        return res.status(500).send({
+        return res.json({
             success: false,
             message: error.message
         })

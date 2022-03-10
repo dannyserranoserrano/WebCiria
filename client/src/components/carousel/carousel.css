@@ -1,0 +1,39 @@
+/* .video-responsive {
+    overflow:hidden;
+    padding-bottom:632px; /* Adecua este valor para controlar la altura del video */
+    /* position:relative;
+    height:0;
+} 
+/* .video-responsive iframe{
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+} */
+
+.carrusel {
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-height: 1000px;
+    max-width: 1200px;
+}
+
+@media only screen and (max-width:767px) {
+
+    .carrusel {
+        font-size: 12px;
+        padding: 2px;
+        border: 1px solid black;
+        border-radius: 5px;
+        max-height: 230px;
+    }
+
+}

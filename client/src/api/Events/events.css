@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.events {
+    background-color: rgb(210, 211, 211);
+    width: auto;
+    height: auto;
+}
+
+.eventsTitle {
+    margin-top: 40px;
+    font-size: 40px;
+}
+
+.eventsTable {
+    margin-top: 150px;
+    width: 700px;
+}
+
+.eventsButtons {
+    margin-top: 18vh;
+}
+
+
+@media only screen and (max-width:767px) {
+    .events {
+        margin-top: 2px;
+    }
+
+    .eventsTitle {
+        margin-top: 20px;
+        font-size: 30px;
+    }
+
+    .eventsTable {
+        margin-top: 100px;
+       width: auto;
+        
+    }
+
+    .eventsButtons {
+        margin-top:17vh;
+        margin-bottom: 10px;
+    }
+
+}

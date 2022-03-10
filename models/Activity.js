@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 
 // *****CREAMOS EL SCHEMA*****
 const ActivitySchema = new mongoose.Schema({
-    activityName: {
+    name: {
         type: String,
         required: true
     },

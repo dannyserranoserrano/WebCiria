@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.index{
+    background-color: rgb(210, 211, 211);
+    min-height: 587px;
+    height:auto
+   }
+
+.titulo{
+    text-align: center;
+}
+@media only screen and (max-width:767px){
+    .index{
+        margin-top: 10px
+    }
+    
+}

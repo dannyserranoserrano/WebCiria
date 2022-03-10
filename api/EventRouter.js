@@ -7,33 +7,39 @@ const EventRouter = express.Router();
 
 // *****VISUALIZAMOS TODOS LOS EVENTOS*****
 EventRouter.get("/events", async (req, res) => {
-    let events = await Event.find({})
-    return res.status(200).send({
+    let events = await Event.find({}).populate({path:"participating", select:"name surname"})
+    return res.json({
         success: true,
         events
     })
 })
 
 // *****VISUALIZAR UN EVENTO*****
-EventRouter.get("/findEvent/:id", async (req, res) => {
+EventRouter.get("/findEvent/:eventId", async (req, res) => {
     const {
-        id
+        eventId
     } = req.params
     try {
-        let event = await Event.findById(id).populate({path:"participating", select:"name surname"})
+        let event = await Event.findById(eventId).populate({
+            path:"participating", select:"name surname"
+        }).populate({
+            path:"activity", select:"name pay"
+        }).populate({
+            path:"file", select:"image"
+        })
 
         if (!event) {
-            res.status(400).send({
+            res.status(400).json({
                 success: false,
-                message: "Event not found"
+                message: "Evento no encontrado"
             })
         }
-        return res.status(200).send({
+        return res.status(200).json({
             success: true,
             event          
         })
     } catch (error) {
-        res.status(500).send({
+        res.status(500).json({
             success: false,
             message: error.message
         })
@@ -42,39 +48,45 @@ EventRouter.get("/findEvent/:id", async (req, res) => {
 
 // *****CREAMOS NUEVOS EVENTOS*****
 EventRouter.post("/newEvent",auth,async (req, res) => {
+
+    const {
+        id
+    } = req.user // Nos reconoce el usuario mediante el Tokken (auth.js)
     const {
         activityId,
+        name,
         description,
         price,
-        userCreateId,
         dateActivity,    
     } = req.body
     try {
         // *****CREAMOS ERRORES*****
-        if (!activityId || !description || !price  || !userCreateId ||!dateActivity) {
-            return res.status(400).send({
+        if (!activityId || !description || !price ||!dateActivity) {
+            return res.json({
                 success: false,
-                message: "You have not completed all the required fields"
+                message: "No has completado todos los campos"
             })
         }
 
         let event = new Event({
             activity: activityId,
+            name,
             description,
             price,
-            userCreate: userCreateId,
-            dateActivity
+            userCreate: id,
+            dateActivity,
+            participating: id
         })
 
         // *****CONFIRMACION GUARDADO*****
         await event.save()
-        return res.status(200).send({
+        return res.json({
             success: true,
-            message: "Event created successfully",
+            message: "Evento creado correctamente",
             event
         })
     } catch (error) {
-        return res.status(500).send({
+        return res.json({
             success: false,
             message: error.message
 
@@ -83,31 +95,44 @@ EventRouter.post("/newEvent",auth,async (req, res) => {
 })
 
 // ****MODIFICAR DATOS DEL EVENTO****
-EventRouter.put("/updateEvent/:id",auth,async (req, res) => {
+EventRouter.put("/updateEvent/:eventId",auth,async (req, res) => {
+    
     const {
         id
+    } = req.user // Nos reconoce el usuario mediante el Tokken (auth.js)
+    const {
+        eventId
     } = req.params
     const {
         activityId,
+        name,
         description,
         price,
-        userCreateId,
         dateActivity
     } = req.body
     try {
-        await Event.findOneAndUpdate(id, {
+
+        let userCreateId = await Event.findById(eventId)
+        if(!userCreateId.userCreate === id){
+            res.status(400).json({
+                success: false,
+                message: "No puedes modificar el evento porque no eres el creador"
+            })
+        }
+
+        await Event.findOneAndUpdate(eventId, {
             activityId,
+            name,
             description,
             price,
-            userCreateId,
             dateActivity
         })
-        return res.status(200).send({
+        return res.json({
             success: true,
-            message: ("Event data is modified")
+            message: ("El Evento ha sido modificado")
         })
     } catch (error) {
-        return res.status(500).send({
+        return res.json({
             success: false,
             message: error.message
         });
@@ -116,19 +141,19 @@ EventRouter.put("/updateEvent/:id",auth,async (req, res) => {
 
 
 // ****BORRAMOS EVENTO*****
-EventRouter.delete("/deleteEvent/:id",auth,authAdmin,async (req, res) => {
+EventRouter.delete("/deleteEvent/:eventId",auth,authAdmin,async (req, res) => {
     const {
-        id
+        eventId
     } = req.params
     try {
-        await Event.findByIdAndDelete(id)
-        return res.status(200).send({
+        await Event.findByIdAndDelete(eventId)
+        return res.json({
             success: true,
-            message: "The event has been deleted"
+            message: "El Evento ha sido borrado"
         })
 
     } catch (error) {
-        return res.status(500).send({
+        return res.json({
             success: false,
             message: error.message
         })

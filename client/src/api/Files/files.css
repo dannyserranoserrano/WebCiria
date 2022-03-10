@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.files {
+    background-color: rgb(210, 211, 211);
+   
+}
+
+.filesTitle {
+    margin-top: 30px;
+    
+}
+
+.fileButtons {
+    margin-top: 79vh;
+    width: 100%;
+}
+
+@media only screen and (max-width:767px) {
+    .files {
+        margin-top: 2px;
+    }
+
+    .filesTitle {
+        margin-top: 10px;
+        
+    }
+
+    .fileButtons {
+        margin-top: 80vh;
+    }
+
+}

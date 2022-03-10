@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.file {
+    background-color: rgb(210, 211, 211);
+    width: auto;
+    height: auto;
+}
+
+.fileTitle {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 40px;
+}
+
+.imgFile {
+    width: 800px;
+    border-radius: 5px;
+    border: 2px solid black;
+    box-shadow: 10px 10px 10px rgb(51, 51, 51);
+}
+
+.tablafile {
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    width: 600px;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.reqfile {
+    font-size: 25px;
+}
+
+.resfile {
+    font-size: 20px;
+}
+
+.fileButtons {
+    margin-top: 5vh;
+    width: 100%;
+}
+
+
+@media only screen and (max-width:767px) {
+    .file {
+        margin-top: 2px;
+    }
+
+    .fileTitle {
+        margin-top: 10px;
+        font-size: 30px;
+    }
+
+    .tablafile {
+        border: 1px solid black;
+        border-radius: 5px;
+        width: 200px;
+    }
+
+    .imgFile {
+        width: 300px;
+        border-radius: 5px;
+        border: 2px solid black;
+        box-shadow: 10px 10px 10px rgb(51, 51, 51);
+    }
+
+    .reqfile {
+        font-size: 18px;
+    }
+
+    .resfile {
+        font-size: 14px;
+    }
+
+    .fileButtons {
+        margin-top: 4vh;
+
+    }
+
+
+}

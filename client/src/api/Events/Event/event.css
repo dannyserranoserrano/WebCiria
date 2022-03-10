@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.event {
+    background-color: rgb(210, 211, 211);
+    width: auto;
+    height: auto;
+}
+
+.eventTitle {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 40px;
+}
+.tablaEvent{
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    width: 600px;
+    padding: 10px;
+}
+
+.reqEvent{
+    font-size: 25px;
+}
+
+.resEvent{
+font-size: 20px;
+}
+
+
+
+
+.eventButtons {
+    margin-top: 5vh;
+    width: 100%;
+}
+
+
+@media only screen and (max-width:767px) {
+    .event {
+        margin-top: 2px;
+    }
+
+    .eventTitle {
+        margin-top: 10px;
+        font-size: 30px;
+    }
+
+ .tablaEvent{
+        border: 1px solid black;
+        border-radius: 5px;
+        width: 300px;
+    }
+
+    .reqEvent{
+        font-size: 18px;
+    }
+    
+    .resEvent{
+    font-size: 14px;
+    }
+
+    .eventButtons {
+        margin-top: 4vh;
+       
+    }
+   
+   
+}

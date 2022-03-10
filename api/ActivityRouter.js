@@ -6,33 +6,33 @@ const Activity = require("../models/Activity");
 const ActivityRouter = express.Router();
 
 // *****VISUALIZAMOS LAS ACTIVIDADES*****
-ActivityRouter.get("/activities", auth,async (req, res) => {
+ActivityRouter.get("/activities", auth, async (req, res) => {
     let activity = await Activity.find({})
-    return res.status(200).send({
+    return res.status(200).json({
         success: true,
         activity
     })
 })
 
 // *****VISUALIZAR UNA ACTIVIDAD*****
-ActivityRouter.get("/findActivity/:id",auth,async (req, res) => {
+ActivityRouter.get("/findActivity/:activityId", auth, async (req, res) => {
     const {
-        id
+        activityId
     } = req.params
     try {
-        let activity = await Activity.findById(id)
+        let activity = await Activity.findById(activityId)
         if (!activity) {
-            res.status(400).send({
+            res.status(400).json({
                 success: false,
                 message: "Activity not found"
             })
         }
-        return res.status(200).send({
+        return res.status(200).json({
             success: true,
             activity
         })
     } catch (error) {
-        res.status(500).send({
+        res.status(400).json({
             success: false,
             message: error.message
         })
@@ -40,52 +40,62 @@ ActivityRouter.get("/findActivity/:id",auth,async (req, res) => {
 })
 
 // *****CREAMOS NUEVAS ACTIVIDADES*****
-ActivityRouter.post("/newActivity",auth,authAdmin,async (req, res) => {
+ActivityRouter.post("/newActivity", auth, authAdmin, async (req, res) => {
     const {
-        activityName,
+        name,
         pay
     } = req.body
-    let activity = new Activity({
-        activityName,
-        pay
-    })
 
-    // *****Creamos los errores*****
-    if (!activityName || !pay) {
-        return res.status(400).send({
+    try {
+        // *****Creamos los errores*****
+        if (!name || !pay) {
+            return res.status(400).json({
+                success: false,
+                message: "No has rellenado todos los campos"
+            })
+        }
+        let activity = new Activity({
+            name,
+            pay
+        })
+        // *****Confirmación de guardado*****
+        await activity.save()
+        return res.status(200).json({
+            success: true,
+            message: "Actividad creada correctamente",
+            activity
+        })
+
+    } catch (error) {
+        return res.status(400).json({
             success: false,
-            message: "You have not completed all the required fields"
+            message: error.message
         })
     }
-    // *****Confirmación de guardado*****
-    await activity.save()
-    return res.status(200).send({
-        success: true,
-        message: "Activity created successfully",
-        activity
-    })
+
+
 })
 
 // ****MODIFICAR DATOS DE LA ACTIVIDAD****
-ActivityRouter.put("/updateActivity/:id",auth,authAdmin,async (req, res) => {
+ActivityRouter.put("/updateActivity/:activityId", auth, authAdmin, async (req, res) => {
     const {
-        id
+        activityId
     } = req.params
     const {
-        activityName,
+        name,
         pay
     } = req.body
     try {
-        await Activity.findOneAndUpdate(id, {
-            activityName,
+        await Activity.findOneAndUpdate(activityId, {
+            name,
             pay
         })
-        return res.status(200).send({
+        return res.status(200).json({
             success: true,
-            message: ("Activity is modified")
+            message: ("La Actividad ha sido modificada")
         })
     } catch (error) {
-        return res.status(500).send({
+        return res.status(200).json({
             success: false,
             message: error.message
         })
@@ -93,19 +103,19 @@ ActivityRouter.put("/updateActivity/:id",auth,authAdmin,async (req, res) => {
 })
 
 // ****BORRAMOS ACTIVIDAD*****
-ActivityRouter.delete("/deleteActivity/:id",auth,authAdmin ,async (req, res) => {
+ActivityRouter.delete("/deleteActivity/:activityId", auth, authAdmin, async (req, res) => {
     const {
-        id
+        activityId
     } = req.params
     try {
-        await Activity.findByIdAndDelete(id)
-        return res.status(200).send({
+        await Activity.findByIdAndDelete(activityId)
+        return res.status(200).json({
             success: true,
-            message: "The activity has been deleted"
+            message: "La actividad ha sido borrada"
         })
 
     } catch (error) {
-        return res.status(500).send({
+        return res.status(200).json({
             success: false,
             message: error.message
         })

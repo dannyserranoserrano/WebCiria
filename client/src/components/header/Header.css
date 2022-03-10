@@ -1,0 +1,12 @@
+.header{
+    width: 100%;
+}
+
+.menu{
+display: flex;
+justify-content:end
+}
+
+.p{
+    font-size: 10px;
+}

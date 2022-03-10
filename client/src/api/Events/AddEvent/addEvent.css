@@ -1,0 +1,71 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.addEventTitle {
+    font-size: 40px;
+}
+
+.addEvent {
+    background-color: rgb(210, 211, 211);
+}
+
+.inputsAddEvent {
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 10vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 600px;
+    background-color: rgb(241, 231, 231);
+
+}
+
+.addEventName {
+    width: 200px;
+    margin-bottom: 12px;
+}
+
+.addEventDescription {
+    width: 200px;
+    margin-bottom: 12px;
+}
+
+.addEventActivity {
+    width: 200px;
+    margin-bottom: 12px;
+}
+
+.addEventPrice {
+    width: 200px;
+    margin-bottom: 12px;
+}
+
+.addEventDate {
+    width: 250px;
+    margin-bottom: 12px;
+}
+
+.AddEventButtons {
+    margin-top: 24vh;
+}
+
+@media only screen and (max-width:767px) {
+
+    .addEventTitle {
+        font-size: 20px;
+    }
+
+    .inputsAddEvent {
+        margin-top: 10px;
+    }
+
+    .AddEventButtons {
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+}

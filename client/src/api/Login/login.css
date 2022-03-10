@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.logout {
+    background-color: rgb(210, 211, 211);
+}
+
+.buttonsLogout {
+    margin-top: 25vh;
+    margin-bottom: 2vh;
+    width: 100%;
+}
+
+
+@media only screen and (max-width:767px) {
+    .buttonslogOut {
+        margin-top: 18vh;
+    }
+}

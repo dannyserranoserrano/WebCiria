@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.reserves {
+    background-color: rgb(210, 211, 211);
+    width: auto;
+    height: auto;
+}
+
+.reservesTitle {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.reservesButtons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 25vh;
+    width: 100%;
+}
+
+@media only screen and (max-width:767px) {
+    .reserves {
+        margin-top: 2px;
+    }
+
+    .reservesTitle {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-bottom: 5px;
+    }
+
+    .reservesButtons {
+        margin-top: 19vh;
+    }
+
+}

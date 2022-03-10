@@ -5,7 +5,11 @@ const mongoose = require("mongoose")
 const EventSchema = new mongoose.Schema({
     activity: {
         type: mongoose.Types.ObjectId,
-        ref: "ActivityType",
+        ref: "Activity",
+    },
+    name:{
+        type: String,
+        required: true
     },
     description: {
         type: String

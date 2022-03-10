@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.activities {
+    background-color: rgb(210, 211, 211);
+    width: auto;
+    
+}
+
+.activitiesTitle {
+    margin-top: 30px;
+    
+}
+.activitiesTable{
+    margin-top: 90px
+}
+
+.activitiesButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 26vh
+}
+
+@media only screen and (max-width:767px) {
+    
+
+    .activitiesTitle {
+        margin-top: 30px; 
+    }
+
+    .activitiesButtons {
+        margin-top: 17vh;
+        margin-bottom: 10px;
+    }
+}

@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.register{
+    background-color: rgb(210, 211, 211);
+}
+
+.buttons{
+    margin-top: 27vh;
+    width: 100%;
+}
+.container{
+    padding-bottom: 22px;
+}
+
+@media only screen and (max-width:767px) {
+    .buttons {
+        margin-top: 2vh;
+    }
+    .container {
+        padding-bottom: 2vh;
+    }
+}

@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.user {
+    background-color: rgb(210, 211, 211);
+}
+
+.userTitle {
+    margin-top: 70px;
+    font-size: 40px;
+}
+
+.tablaUser {
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 500px;
+    background-color: white;
+    margin-top: 100px; 
+}
+
+.headUser {
+    font-size: 25px;
+    text-align: center;
+}
+
+.bodyUser {
+    font-size: 20px;
+    text-align: center;
+
+}
+
+.userButtons {
+    margin-top: 21vh;
+}
+
+@media only screen and (max-width:767px) {
+
+    .userTitle {
+        margin-top: 30px;
+        font-size: 30px;
+    }
+
+    .tablaUser {
+        width: 300px;
+        margin-top: 70px;
+    }
+
+    .headUser {
+        font-size: 16px;
+    }
+
+    .bodyUser {
+        font-size: 14px;
+
+    }
+
+    .userButtons {
+        margin-top: 16vh;
+        margin-bottom: 10px;
+    }
+}

@@ -19,31 +19,35 @@ cloudinary.config({
 // *****VISUALIZAR TODOS LOS ARCHIVOS*****
 FileRouter.get("/files", async (req, res) => {
     let files = await File.find({})
-    return res.status(200).send({
+    return res.status(200).json({
         success: true,
         files
     })
 })
 
 // *****VISUALIZAR UN ARCHIVO*****
-FileRouter.get("/findFiles/:id", async (req, res) => {
+FileRouter.get("/findFiles/:fileId", auth, async (req, res) => {
     const {
-        id
+        fileId
     } = req.params
     try {
-        let file = await File.findById(id)
+        let file = await File.findById(fileId).populate({
+            path:"event", select:"name dateActivity"
+        }).populate({
+            path:"user", select:"name surname"
+        })
         if (!file) {
-            res.status(400).send({
+            return res.status(400).json({
                 success: false,
-                message: "File not found"
+                message: "Archivo no encontrado"
             })
         }
-        return res.status(200).send({
+        return res.status(200).json({
             success: true,
             file
         })
     } catch (error) {
-        res.status(500).send({
+       return res.status(500).json({
             success: false,
             message: error.message
         })
@@ -53,43 +57,50 @@ FileRouter.get("/findFiles/:id", async (req, res) => {
 // *****CREAMOS NUEVO ARCHIVO*****
 FileRouter.post("/newFile",auth,async (req, res) => {
     const {
+        id
+     } = req.user // Nos reconoce el usuario mediante el Tokken (auth.js)
+    const {
         fileName,
         description,
         date,
-        user,
         event
     } = req.body
+    const file = req.files.file
+
+    console.log(file)
 
     try {
-        if (!fileName || !date || !user) {
-            return res.status(400).send({
-                success: false,
-                message: "You have not completed all the required fields"
-            })
-        }
+        // if (!fileName || !date) {
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: "No has completado todos los campos"
+        //     })
+        // }
     
 
         if (!req.files || Object.keys(req.files).length === 0)
             return res.status(400).json({
-                msg: 'No files were uploaded.'
+                success:false,
+                message: 'No has seleccionado ningun archivo'
             })
 
-        const file = req.files.file;
-        console.log(file)
+        
 
         if (file.size > 4000 * 3000) {
             removeTmp(file.tempFilePath)
             return res.status(400).json({
-                msg: 'Size too large'
+                success:false,
+                message: 'El archivo es demasiado grande'
             })
         }
         if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
             removeTmp(file.tempFilePath)
-
             return res.status(400).json({
-                msg: "File format is incorrect."
+                success:false,
+                message: "Formato de archivo incorrecto."
             })
         }
+
         let newFile = await cloudinary.v2.uploader.upload(file.tempFilePath, {
             folder: "filesUpload"
         }, async (err, result) => {
@@ -105,18 +116,18 @@ FileRouter.post("/newFile",auth,async (req, res) => {
                 public_id: newFile.public_id,
                 url: newFile.secure_url
             },
-            user,
+            user: id,
             event
         })
 
         // *****CONFIRMACION GUARDADO*****
         await fileImg.save()
-        return res.status(200).send({
+        return res.status(200).json({
             success: true,
             fileImg
         })
     } catch (error) {
-        res.status(500).send({
+        res.status(500).json({
             success: false,
             message: error.message
         })
@@ -124,9 +135,9 @@ FileRouter.post("/newFile",auth,async (req, res) => {
 })
 
 // ****MODIFICAR DATOS DEL ARCHIVO*****
-FileRouter.put("/updateFile/:id",auth,async (req, res) => {
+FileRouter.put("/updateFile/:fileId",auth,async (req, res) => {
     const {
-        id
+        fileId
     } = req.params
     const {
         fileName,
@@ -134,17 +145,17 @@ FileRouter.put("/updateFile/:id",auth,async (req, res) => {
         date,
     } = req.body
     try {
-        await File.findOneAndUpdate(id, {
+        await File.findOneAndUpdate(fileId, {
             fileName,
             description,
             date
         })
-        return res.status(200).send({
+        return res.status(200).json({
             success: true,
-            message: ("The File Data is Modified")
+            message: ("Los datos del archivo han sido modificados")
         })
     } catch (error) {
-        return res.status(500).send({
+        return res.status(500).json({
             success: false,
             message: error.message
         })
@@ -152,10 +163,10 @@ FileRouter.put("/updateFile/:id",auth,async (req, res) => {
 })
 
 // ****BORRAMOS DATOS*****
-FileRouter.delete("/deleteFile/:id",auth,authAdmin,async (req, res) => {
+FileRouter.delete("/deleteFile/:fileId",auth,authAdmin,async (req, res) => {
 
 try {
-    const{id} = req.params
+    const{fileId} = req.params
     const{public_id} = req.body
     if (!public_id) {
         return res.status(400).json({
@@ -163,19 +174,20 @@ try {
           message: "No se han seleccionado imagenes",
         });
       }
-    await File.findByIdAndDelete(id)
+      
+    await File.findByIdAndDelete(fileId)
     cloudinary.v2.uploader.destroy(public_id, async (err, result) => {
         if (err) throw err;
       });
   
-      res.json({
+      return res.status(200).json({
         success: true,
         message: "Archivo eliminado correctamente",
       });
 
 
     } catch (error) {
-        return res.status(500).send({
+        return res.status(500).json({
             success: false,
             message: error.message
         })

@@ -3,9 +3,9 @@ const fileUpload = require("express-fileupload")
 const mongoose = require("mongoose");
 const app = express();
 require("dotenv").config();
+const cors = require ("cors")
 
 const UserRouter = require("./api/UserRouter")
-const PaymentRouter = require("./api/PaymentRouter")
 const FileRouter = require("./api/FileRouter")
 const EventRouter = require("./api/EventRouter")
 const ActivityRouter = require("./api/ActivityRouter")
@@ -21,14 +21,15 @@ app.use(express.urlencoded());
 app.use(fileUpload({
     useTempFiles: true
 }))
-
+//*****LLAMAMOS A CORS para evitar bloqueos de seguridad***** */
+app.use(cors())
 // *****LLAMAMOS A LOS ENRUTAMIENTOS*****
 app.use("/api", UserRouter)
-app.use("/api", PaymentRouter)
 app.use("/api", FileRouter)
 app.use("/api", EventRouter)
 app.use("/api", ActivityRouter)
 app.use("/api", ReserveRouter)
+
 
 // *****DECLARAMOS URL*****
 const URL = process.env.MONGODB_URL

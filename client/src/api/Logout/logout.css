@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.login {
+    background-color: rgb(210, 211, 211);
+}
+
+.buttons1 {
+    margin-top: 25vh;
+    margin-bottom: 2vh;
+    width: 100%;
+}
+
+
+@media only screen and (max-width:767px) {
+    .buttons1 {
+        margin-top: 18vh;
+    }
+    .container {
+        padding-bottom: 1px;
+    }
+}

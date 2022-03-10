@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.activity {
+    background-color: rgb(210, 211, 211);
+}
+
+.activityTitle {
+    margin-top: 70px;
+    font-size: 40px;
+}
+
+.tablaActivity {
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 500px;
+    background-color: white;
+    margin-top: 200px;
+}
+
+.headActivity {
+    display: flex;
+    justify-content: space-between;
+    font-size: 25px;
+}
+
+.bodyActivity {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+
+}
+
+.activityButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 33vh;
+    width: 100%;
+}
+
+@media only screen and (max-width:767px) {
+
+    .activityTitle {
+        margin-top: 70px;
+        font-size: 30px;
+    }
+
+    .tablaActivity {
+        width: 300px;
+        margin-top: 150px;
+    }
+
+    .headActivity {
+        font-size: 20px;
+    }
+
+    .bodyActivity {
+        font-size: 16px;
+
+    }
+
+    .activityButtons {
+        margin-top: 24vh;
+    }
+}

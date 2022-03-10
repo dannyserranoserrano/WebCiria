@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.users {
+    background-color: rgb(210, 211, 211);
+    width: auto;
+    height: auto;
+}
+
+.usersTitle {
+    margin-top: 30px;
+}
+
+.usersTable{
+    margin-top: 150px;
+}
+
+.usersButtons {
+    margin-top: 24vh;
+}
+
+
+@media only screen and (max-width:767px) {
+    .users {
+        margin-top: 2px;
+    }
+
+    .usersTitle {
+        margin-top: 10px;
+    }
+
+    .usersTable{
+        margin-top: 100px;
+    }
+
+    .usersButtons {
+        margin-top: 17vh;
+        margin-bottom: 10px;
+    }
+}
