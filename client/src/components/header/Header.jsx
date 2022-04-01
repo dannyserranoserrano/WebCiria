@@ -130,7 +130,7 @@ const Header = () => {
                                 <Link className="nav-link active" aria-current="page" to="/reserves">Reservas</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link active" type="button" to="/logout">Cerrar Sesion</Link>
+                                <Link className="nav-link active" type="button" to="/logout">Cerrar Sesión</Link>
                             </li>
                         </ul>
                     </div>
