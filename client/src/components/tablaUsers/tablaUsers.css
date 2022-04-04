@@ -24,11 +24,6 @@ display: flex;
 justify-content:space-between;
 }
 
-
-.bodyUsers {
-    display: flex;
-    justify-content: center;
-    }
 @media only screen and (max-width:767px) {
     .tablaUsers {
         border: 1px solid black;

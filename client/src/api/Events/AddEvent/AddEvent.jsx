@@ -29,7 +29,7 @@ const AddEvent = () => {
                     "Authorization": token
                 }
             })
-            console.log(response2.data);
+            console.log(response2.data.activity);
             setActivity(response2.data.activity);
         }
         getActivity();
@@ -108,7 +108,7 @@ return (
                         <select className="form-select" name="activityId" onChange={handleChange} aria-label="Default select example">
                             <option selected>Selecciona...</option>
                             {activity.map(e => (
-                                <option key={e._id} value={e._id}>{e.activity}</option>
+                                <option key={e._id} value={e._id}>{e.name}</option>
 
                             ))}
                         </select>

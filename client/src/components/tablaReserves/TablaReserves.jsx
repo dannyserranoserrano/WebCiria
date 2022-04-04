@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import './tablaReserves.css'
 
@@ -23,25 +23,26 @@ const TablaReserves = () => {
 
 
     return (
-        <div className="container tablaReserves mt-4 mb-4">
-            <table className="table table-sm table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Evento</th>
-                        <th>Participantes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {reserves.map(e => (
-                        <tr key={e._id}>
-                            <td>{e.event.name} </td>
-                            <td>{e.participating.name} {e.participating.surname}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <div className="tablaReserves col auto mt-4 mb-4">
+            <div className="container headUsers table table-responsive mb-0">
+                <div className='head2Reserves mt-2'>
+                    <div><strong>Evento</strong></div>
+                    <div><strong>Participantes</strong></div>
+                </div>
+                <div>
+                    <div className="container">
+                        {reserves.map(e => (
+                            <Link key={e._id} to={`/reserves/${e._id}`} className="container linkReserves">
+                                <div className='link2Reserves m-0'>
+                                    <div className='divReserves'>{e.event.name} </div>
+                                    <div className='divPartic'>{e.participating.name} {e.participating.surname}</div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </div>
         </div>
-
     )
 }
 

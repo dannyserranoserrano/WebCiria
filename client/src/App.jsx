@@ -5,6 +5,7 @@ import Home from './api/Home/Home';
 import Register from './api/Register/Register';
 import Login from './api/Login/Login';
 import User from './api/Users/User/User';
+import UserAdmin from './api/Users/User/UserAdmin';
 import Users from './api/Users/Users';
 import Events from './api/Events/Events';
 import AddEvent from './api/Events/AddEvent/AddEvent';
@@ -12,6 +13,8 @@ import Event from './api/Events/Event/Event';
 import Activities from './api/Activities/Activities';
 import AddActivity from './api/Activities/AddActivity/AddActivity';
 import Activity from './api/Activities/Activity/Activity';
+import Reserve from './api/Reserves/Reserve/Reserve';
+import ReserveAdmin from './api/Reserves/Reserve/ReserveAdmin';
 import Reserves from './api/Reserves/Reserves';
 import Files from './api/Files/Files';
 import AddFile from './api/Files/AddFile/AddFile';
@@ -34,6 +37,8 @@ function App() {
           />
           <Route path="/user" element={<User />}
           />
+           <Route path="/users/:userId" element={<UserAdmin />}
+          />
           <Route path="/users" element={<Users />}
           />
           <Route path="/events" element={<Events />}
@@ -48,6 +53,10 @@ function App() {
           />
           <Route path="/activities/addActivity" element={<AddActivity />}
           />
+          <Route path="/reserve" element={<Reserve />}
+          />
+           <Route path="/reserves/:reserveId" element={<ReserveAdmin />}
+           />
           <Route path="/reserves" element={<Reserves />}
           />
           <Route path="/files" element={<Files />}

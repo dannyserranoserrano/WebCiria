@@ -19,17 +19,11 @@ const Reserves = () => {
                     <TablaReserves />
                 </div>
                 {/* *****Buttons***** */}
-                <div className="container reservesButtons mb-3">
-                    <div className="btn-group btn-group-sm">
-                        <button className="btn btn-success" type="submit" onChange={handleModify}>Ver
-                        </button>
-                        <button className="btn btn-warning" type="submit" onChange={handleModify}>Modificar
-                        </button>
-                        <button className="btn btn-danger" type="submit" onChange={handleModify}>Borrar
-                        </button>
-                    </div>
-                    <div className="">
-                        <Link className="btn btn-sm btn-primary " type="button" to="/">Volver</Link>
+                <div className="container reservesButtons">
+                    <div className="row justify-content-end">
+                        <div className="addReserves col-auto">
+                            <Link className="btn btn-sm btn-primary " type="button" to="/">Volver</Link>
+                        </div>
                     </div>
                 </div>
             </div>

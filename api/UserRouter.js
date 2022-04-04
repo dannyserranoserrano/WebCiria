@@ -35,25 +35,24 @@ UserRouter.get("/users", auth, authAdmin, async (req, res) => {
 
 // *****VISUALIZAMOS DATOS DE UN SOLO USUARIO*****
 UserRouter.get("/findUser/:userId", auth, authAdmin, async (req, res) => {
-
     const {
         userId
     } = req.params
     try {
-        let user = await User.findById(id)
-        if (!user) {
-            res.json({
-                success: false,
-                message: "Usuario no encontrado"
-            })
-        }
+        let user2 = await User.findById(userId)
+        // if (!user2) {
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: "Usuario no encontrado"
+        //     })
+        // }
         return res.status(200).json({
             success: true,
             message: "Usuario Encontrado!!!",
-            user
+            user2
         })
     } catch (error) {
-        res.json({
+        return res.status(500).json({
             success: false,
             message: error.message
         })
@@ -69,7 +68,7 @@ UserRouter.get("/findUser", auth, async (req, res) => {
     try {
         let user = await User.findById(id)
         if (!user) {
-            res.json({
+            res.status(400).json({
                 success: false,
                 message: "Usuario no encontrado"
             })
@@ -250,6 +249,28 @@ UserRouter.put("/updateUser", auth, async (req, res) => {
         })
     } catch (error) {
         return res.json({
+            success: false,
+            message: error.message
+        })
+    }
+})
+
+// ****BORRAMOS DATOS DE UN USUARIO*****
+UserRouter.delete("/deleteUser/:userId", auth, async (req, res) => {
+
+    const {
+        userId
+    } = req.params // Nos reconoce el usuario mediante el Tokken (auth.js)
+
+    try {
+        await User.findByIdAndDelete(userId)
+        return res.status(200).json({
+            success: true,
+            message: "El Usuario ha sido borrado"
+        })
+
+    } catch (error) {
+        return res.status(500).json({
             success: false,
             message: error.message
         })

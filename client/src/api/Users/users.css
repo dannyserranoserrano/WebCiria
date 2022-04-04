@@ -16,10 +16,11 @@
 
 .usersTable{
     margin-top: 150px;
+    max-width: 600px;
 }
 
 .usersButtons {
-    margin-top: 24vh;
+    margin-top: 13vh;
 }
 
 
@@ -34,6 +35,7 @@
 
     .usersTable{
         margin-top: 100px;
+        max-width: 350px;
     }
 
     .usersButtons {

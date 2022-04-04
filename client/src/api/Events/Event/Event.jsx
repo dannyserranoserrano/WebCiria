@@ -55,6 +55,30 @@ const Event = () => {
         }
     };
 
+     // *****FUNCION PARA BORRAR*****
+     const deleteEvent = async (e) => {
+        e.preventDefault();
+        const response2 = await axios.delete(
+            `http://localhost:5000/api/deleteEvent/${eventId}`, {
+            headers: {
+                "Authorization": token
+            }
+        })
+        try {
+
+            setSuccessMessage(response2.data.message)
+
+            setTimeout(() => {
+                window.location.href = '/'
+            }, 10000)
+
+        } catch (error) {
+            setErrorMessage(response2.data.error.message)
+            setTimeout(() => {
+                window.location.href = '/event'
+            }, 10000)
+        }
+    };
     
     // ******EVENTS UNLOGGED*****
 
@@ -125,9 +149,9 @@ const Event = () => {
                         <div className="resEvent"> {event.dateActivity}</div>
                         <div className="reqEvent"><strong>Participantes:</strong></div>
                         {participating.map(e => (
-                            <ul>
+                            <div>
                                 <li className="resEvent">{e.name} {e.surname}</li>
-                            </ul>
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -191,9 +215,9 @@ const Event = () => {
                         <div className="resEvent"> {event.dateActivity}</div>
                         <div className="reqEvent"><strong>Participantes:</strong></div>
                         {participating.map(e => (
-                            <ul className="m-0">
+                            <div className="m-0">
                                 <li className="resEvent">{e.name} {e.surname}</li>
-                            </ul>
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -224,8 +248,7 @@ const Event = () => {
                         <div className="btn-group btn-group-sm col-auto ">
                             <button className="btn btn-warning" type="submit" >Modificar
                             </button>
-                            <button className="btn btn-danger" type="submit" >Borrar
-                            </button>
+                            <button className="btn btn-danger" onClick={deleteEvent}>Borrar </button>
                         </div>
 
                         <div className="col-auto">

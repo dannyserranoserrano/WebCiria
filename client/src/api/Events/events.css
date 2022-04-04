@@ -21,7 +21,8 @@
 }
 
 .eventsButtons {
-    margin-top: 18vh;
+    margin-top: 34vh;
+    margin-bottom: 1px;
 }
 
 
@@ -42,7 +43,7 @@
     }
 
     .eventsButtons {
-        margin-top:17vh;
+        margin-top:27vh;
         margin-bottom: 10px;
     }
 

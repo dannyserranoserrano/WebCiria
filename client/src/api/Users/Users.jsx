@@ -6,8 +6,7 @@ import TablaUsers from '../../components/tablaUsers/TablaUsers'
 
 
 const Users = () => {
-    const handleModify = () => {
-    }
+   
     return (
         <div className="users">
             <div className="header">
@@ -20,15 +19,7 @@ const Users = () => {
                 </div>
                 {/* *****Buttons***** */}
                 <div className="container usersButtons">
-                    <div className="row justify-content-between">
-                        <div className="btn-group btn-group-sm col-auto">
-                            <button className="btn btn-success" type="submit" onChange={handleModify}>Ver
-                            </button>
-                            <button className="btn btn-warning" type="submit" onChange={handleModify}>Modificar
-                            </button>
-                            <button className="btn btn-danger" type="submit" onChange={handleModify}>Borrar
-                            </button>
-                        </div>
+                    <div className="row justify-content-end">
                         <div className="volverUser col-auto">
                             <Link className="btn btn-sm btn-primary " type="button" to="/">Volver</Link>
                         </div>

@@ -41,12 +41,12 @@ const Files = () => {
                 <Header />
             </div>
             <div className="container">
-                <div className="filesTitle text-center"><h1>GALERIA</h1></div>
+                <div className="filesTitle text-center"><p>GALERIA</p></div>
                 <div className="container">
                     <TablaFiles />
                 </div>
                 {/* *****Buttons***** */}
-                <div className="container fileButtons">
+                <div className="container filesButtons">
                     <div className=" row justify-content-between">
                         <div className="btn-group btn-group-sm col-auto ">
                             <div className="addFiles">

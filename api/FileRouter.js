@@ -84,8 +84,6 @@ FileRouter.post("/newFile",auth,async (req, res) => {
                 message: 'No has seleccionado ningun archivo'
             })
 
-        
-
         if (file.size > 4000 * 3000) {
             removeTmp(file.tempFilePath)
             return res.status(400).json({
@@ -167,18 +165,18 @@ FileRouter.delete("/deleteFile/:fileId",auth,authAdmin,async (req, res) => {
 
 try {
     const{fileId} = req.params
-    const{public_id} = req.body
-    if (!public_id) {
-        return res.status(400).json({
-          success: false,
-          message: "No se han seleccionado imagenes",
-        });
-      }
+    // const{public_id} = req.body
+    // if (!public_id) {
+    //     return res.status(400).json({
+    //       success: false,
+    //       message: "No se han seleccionado imagenes",
+    //     });
+    //   }
       
     await File.findByIdAndDelete(fileId)
-    cloudinary.v2.uploader.destroy(public_id, async (err, result) => {
-        if (err) throw err;
-      });
+    // cloudinary.v2.uploader.destroy(public_id, async (err, result) => {
+    //     if (err) throw err;
+    //   });
   
       return res.status(200).json({
         success: true,

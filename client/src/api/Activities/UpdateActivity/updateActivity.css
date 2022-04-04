@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.updateTitle{
+    font-size: 40px;
+    }
+
+.updateActivity{
+    background-color: rgb(210, 211, 211);
+}
+
+.inputsUpdateActivity{
+    margin-top: 20vh;
+    display: flex;
+    justify-content:space-between;
+    flex-wrap: wrap;
+    border: 2px solid black;
+    border-radius: 20px;
+    background-color: rgb(241, 231, 231);
+    width: 600px;
+    padding:20px;
+}
+
+.updateName{
+    width: 200px;
+}
+
+.updatePay{
+    width: 200px;
+}
+
+.updatebuttons{
+    margin-top: 30vh;
+    width: 100%;
+}
+
+@media only screen and (max-width:767px) {
+
+    .updateTitle{
+        font-size: 30px;
+        }
+
+    .inputsUpdateActivity{
+        margin-top: 10vh;
+        border: 1px solid black;
+        width: auto;
+        justify-content:center;
+    }
+    
+    .updateName{
+        width: 200px;
+    }
+    
+    .updatePay{
+        width: 200px;
+    }
+    
+    .updatebuttons{
+      
+        margin-top: 19vh;
+        
+    }
+}

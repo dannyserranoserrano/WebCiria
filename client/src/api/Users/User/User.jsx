@@ -14,7 +14,8 @@ const User = () => {
 
     useEffect(() => {
         const getUser = async () => {
-            const response = await axios.get('http://localhost:5000/api/findUser', {
+            const response = await axios.get(
+                'http://localhost:5000/api/findUser', {
                 headers: {
                     "Authorization": token
                 }
@@ -63,7 +64,7 @@ const User = () => {
                 <Header />
             </div>
             <div className="container">
-                <div className="userTitle text-center mt-3"><p>USUARIO</p></div>
+                <div className="userTitle text-center mt-3"><p>ESTOS SON TUS DATOS</p></div>
                 <div className="container ">
                     <div className="container tablaUser">
                         <div className="tablaUser2">

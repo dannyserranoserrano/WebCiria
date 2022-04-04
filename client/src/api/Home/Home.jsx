@@ -22,8 +22,12 @@ const Home = () => {
                     <Link className="btn btn-success col-auto  mb-2" type="button" to="/register">Registrate</Link>
                 </div>
                 <div className="title text-center mt-2"><h3>Bienvenid@ usuario!!!,<br />Registrate</h3></div>
-                <TablaEvents />
-                <Carousel />
+                <div className="container eventsIndex">
+                    <TablaEvents />
+                </div>
+                <div className="container carruselIndex">
+                    <Carousel />
+                </div>
             </div>
         </div>
     )
@@ -36,8 +40,12 @@ const Home = () => {
             </div>
             <div className="container">
                 <div className="title text-center mt-2"><h3>Bienvenid@ {name}!!!,<br />estas logueado</h3></div>
-                <TablaEvents />
-                <Carousel />
+                <div className=" container eventsIndex">
+                    <TablaEvents />
+                </div>
+                <div className="container carruselIndex">
+                    <Carousel />
+                </div>
             </div>
         </div>
     )
@@ -50,14 +58,15 @@ const Home = () => {
             </div>
             <div className="container">
                 <div className="title text-center mt-2"><h3>Bienvenid@ {name}!!!,<br />eres Administrador</h3></div>
-                <TablaEvents />
-                <Carousel />
+                <div className="container eventsIndex">
+                    <TablaEvents />
+                </div>
+                <div className="container carruselIndex">
+                    <Carousel />
+                </div>
             </div>
         </div>
     )
-
-
-
 
     // *****Operacion ternaria multiple*****
     let home = role == 0 ? IndexUser() : role == 1 ? IndexAdmin() : Index()

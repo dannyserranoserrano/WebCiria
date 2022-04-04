@@ -36,6 +36,38 @@ ReserveRouter.get("/reserves", auth, authAdmin, async (req, res) => {
     }
 })
 
+// *****VISUALIZAMOS NUESTRA RESERVA*****
+ReserveRouter.get("/findReserve", auth, async (req, res) => {
+    const {
+        id
+    } = req.user
+    try {
+        let reserve = await Reserve.findById(id).populate({
+            path: "participating",
+            select: "name surname"
+        }).populate({
+            path: "event",
+            select: "name"
+        })
+        if (!reserve) {
+            res.json({
+                success: false,
+                message: "Reserva no encontrada"
+            })
+        }
+        return res.json({
+            success: true,
+            message: "Reserva encontrada",
+            reserve
+        })
+    } catch (error) {
+        res.json({
+            success: false,
+            message: error.message
+        })
+    }
+})
+
 // *****VISUALIZAMOS SOLO UNA RESERVA*****
 ReserveRouter.get("/findReserve/:reserveId", auth, async (req, res) => {
     const {
@@ -47,7 +79,7 @@ ReserveRouter.get("/findReserve/:reserveId", auth, async (req, res) => {
             select: "name surname"
         }).populate({
             path: "event",
-            select: "description"
+            select: "name"
         })
         if (!reserve) {
             res.json({
@@ -128,24 +160,27 @@ ReserveRouter.delete("/deleteReserve/:reserveId", auth, async (req, res) => {
     const {
         reserveId
     } = req.params
+    const {
+        id
+    } = req.user
     try {
-        let findUser = await findEvent.participating.find(user)
-        if(!userCreateId.userCreate === id){
-            res.status(400).json({
-                success: false,
-                message: "No puedes borrar la reserva porque no es tuya"
-            })
-        }
+        // let findUser = await findEvent.participating.find(user)
+        // if(!userCreateId.userCreate === id){
+        //     res.status(400).json({
+        //         success: false,
+        //         message: "No puedes borrar la reserva porque no es tuya"
+        //     })
+        // }
 
 
         await Reserve.findByIdAndDelete(reserveId)
-        return res.json({
+        return res.status(200).json({
             success: true,
             message: "La reserva ha sido eliminada"
         })
 
     } catch (error) {
-        return res.json({
+        return res.status(500).json({
             success: false,
             message: error.message
         })

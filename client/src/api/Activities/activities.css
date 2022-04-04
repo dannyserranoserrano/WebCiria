@@ -19,9 +19,7 @@
 }
 
 .activitiesButtons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 26vh
+    margin-top: 48vh
 }
 
 @media only screen and (max-width:767px) {
@@ -32,7 +30,7 @@
     }
 
     .activitiesButtons {
-        margin-top: 17vh;
+        margin-top: 34vh;
         margin-bottom: 10px;
     }
 }

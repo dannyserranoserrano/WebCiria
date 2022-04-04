@@ -18,11 +18,13 @@ const Activities = () => {
                 </div>
                 {/* *****Buttons***** */}
                 <div className="container activitiesButtons">
-                    <div className="addActivities">
-                        <Link className="btn btn-sm btn-success" type="button" to="/activities/addActivity">Añadir Actividad</Link>
-                    </div>
-                    <div className="volverActivities">
-                        <Link className="btn btn-sm btn-primary" type="button" to="/">Volver</Link>
+                    <div className="row justify-content-between">
+                        <div className="addActivities col-auto">
+                            <Link className="btn btn-sm btn-success" type="button" to="/activities/addActivity">Añadir Actividad</Link>
+                        </div>
+                        <div className="volverActivities col-auto">
+                            <Link className="btn btn-sm btn-primary" type="button" to="/">Volver</Link>
+                        </div>
                     </div>
                 </div>
             </div>

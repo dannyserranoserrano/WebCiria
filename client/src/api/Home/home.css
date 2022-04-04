@@ -13,9 +13,22 @@
 .titulo{
     text-align: center;
 }
+.eventsIndex{
+    max-width: 600px;
+}
+.carruselIndex{
+max-width: 1200px;
+}
+
 @media only screen and (max-width:767px){
     .index{
         margin-top: 10px
     }
-    
+    .eventsIndex{
+        max-width: auto;
+    }
+    .carruselIndex{
+        max-width: auto;
+        margin-bottom: 50px;
+        }
 }
