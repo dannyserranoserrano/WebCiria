@@ -86,7 +86,7 @@ ActivityRouter.put("/updateActivity/:activityId", auth, authAdmin, async (req, r
         pay
     } = req.body
     try {
-        await Activity.findOneAndUpdate(activityId, {
+        await Activity.findByIdAndUpdate(activityId, {
             name,
             pay
         })

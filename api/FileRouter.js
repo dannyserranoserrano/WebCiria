@@ -70,12 +70,12 @@ FileRouter.post("/newFile",auth,async (req, res) => {
     console.log(file)
 
     try {
-        // if (!fileName || !date) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: "No has completado todos los campos"
-        //     })
-        // }
+        if (!fileName || !date) {
+            return res.status(400).json({
+                success: false,
+                message: "No has completado todos los campos"
+            })
+        }
     
 
         if (!req.files || Object.keys(req.files).length === 0)
@@ -143,7 +143,7 @@ FileRouter.put("/updateFile/:fileId",auth,async (req, res) => {
         date,
     } = req.body
     try {
-        await File.findOneAndUpdate(fileId, {
+        await File.findByIdAndUpdate(fileId, {
             fileName,
             description,
             date

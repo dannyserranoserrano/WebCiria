@@ -56,22 +56,22 @@ const AddActivity = () => {
             <div className="header">
                 <Header />
             </div>
-            <div className="container">
+            <div className="container centerAddActivity">
                 <div className="addTitle text-center mt-3"><p>AÑADIR ACTIVIDAD</p></div>
                 <form onSubmit={handleSubmit} className="col-auto">
                     <div className="container">
                         <div className='container inputsAddActivity'>
                             <div className="addName">
-                                <label className="form-label ms-3">Nombre de la Actividad</label>
-                                <input type="text" name="name" className="form-control" id="validationDefault01" onChange={handleChange}
+                                <label className="form-label">Nombre de la Actividad</label>
+                                <input type="text" name="name" value={addActivity.name} className="form-control" id="validationDefault01" onChange={handleChange}
                                     placeholder="Nombre de la actividad" required />
                             </div>
                             <div className='addPay'>
-                                <label className="form-label ms-5">De pago</label>
-                                <select className="form-select" name="pay" onChange={handleChange} aria-label="Default select example">
+                                <label className="form-label">De pago</label>
+                                <select className="form-select" name="pay" value={addActivity.pay} onChange={handleChange} aria-label="Default select example">
                                     <option selected>Selecciona...</option>
-                                    <option value="Si">Si</option>
-                                    <option value="No">No</option>
+                                    <option value="Pago">Pago</option>
+                                    <option value="Gratis">Gratis</option>
                                 </select>
                             </div>
                         </div>
@@ -91,12 +91,12 @@ const AddActivity = () => {
                         <div className="container Addbuttons">
                             <div className=" row justify-content-between">
                                 <div className='col-auto'>
+                                    <Link className="btn btn-primary" type="button" to="/activities">Volver</Link>
+                                </div>
+                                <div className='col-auto'>
                                     <button className="btn btn-success" type="submit"
                                         disabled={!addActivity.name.length || !addActivity.pay.length}
                                     >Añadir</button>
-                                </div>
-                                <div className='col-auto'>
-                                    <Link className="btn btn-primary" type="button" to="/activities">Volver</Link>
                                 </div>
                             </div>
                         </div>

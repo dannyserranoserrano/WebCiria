@@ -21,7 +21,6 @@ const Activity = () => {
             })
             console.log(response);
             setActivity(response.data.activity)
-
         }
         getActivity()
     }, [])
@@ -29,44 +28,45 @@ const Activity = () => {
     // *****FUNCION PARA BORRAR*****
     const deleteActivity = async (e) => {
         e.preventDefault();
-        const response2 = await axios.delete(
-            `http://localhost:5000/api/deleteActivity/${activityId}`, {
-            headers: {
-                "Authorization": token
+
+        // *****Confirmación*****
+        let option = window.confirm("Seguro que quieres eliminar esta Actividad???")
+        if (option === true) {
+
+            // *****Hacemos la llamada*****
+            const response2 = await axios.delete(
+                `http://localhost:5000/api/deleteActivity/${activityId}`, {
+                headers: {
+                    "Authorization": token
+                }
+            })
+            try {
+
+                setSuccessMessage(response2.data.message)
+
+                setTimeout(() => {
+                    window.location.href = '/activities'
+                }, 2000)
+
+            } catch (error) {
+                setErrorMessage(response2.data.error.message)
+                setTimeout(() => {
+                    window.location.href = '/activity'
+                }, 2000)
             }
-        })
-        try {
-
-            setSuccessMessage(response2.data.message)
-
-            setTimeout(() => {
-                window.location.href = '/'
-            }, 10000)
-
-        } catch (error) {
-            setErrorMessage(response2.data.error.message)
-            setTimeout(() => {
-                window.location.href = '/activity'
-            }, 10000)
-        }
+        };
     };
-
-
     return (
         <div className=" activity">
             <div className="header">
                 <Header />
             </div>
-            <div className="container">
-                <div className="activityTitle text-center mt-3"><p>ACTIVIDAD</p></div>
+            <div className="container centerActivity">
+                <div className="activityTitle text-center"><p>ACTIVIDAD</p></div>
                 <div className="container tablaActivity">
                     <div className="headActivity">
-                        <div ><strong>Actividad</strong></div>
-                        <div><strong>Pago</strong></div>
-                    </div>
-                    <div className="bodyActivity">
-                        <div> {activity.name}</div>
-                        <div> {activity.pay}</div>
+                        <div ><strong>Actividad</strong> {activity.name}</div>
+                        <div><strong>Pago</strong> {activity.pay}</div>
                     </div>
                 </div>
 
@@ -76,21 +76,23 @@ const Activity = () => {
                         {successMessage}
                     </div>
                 </div>
-                <div className="message_nok shadow-lg p-1 m-3 bg-body rounded border text-center" style={{ display: errorMessage ? "block" : "none" }}>
+                <div className="message_ok shadow-lg p-1 m-3 bg-body rounded border text-center" style={{ display: errorMessage ? "block" : "none" }}>
                     <div>
                         {errorMessage}
                     </div>
                 </div>
 
                 {/* *****Buttons***** */}
-                <div className="container activityButtons mb-3">
-                    <div className="btn-group btn-group-sm col-auto ">
-                        <button className="btn btn-warning" type="submit" >Modificar
-                        </button>
-                        <button className="btn btn-danger" onClick={deleteActivity}>Borrar </button>
-                    </div>
-                    <div className="volverActivities">
-                        <Link className="btn btn-sm btn-primary" type="button" to="/activities">Volver</Link>
+                <div className="container activityButtons">
+                    <div className="row justify-content-between">
+                        <div className="volverActivities col-auto">
+                            <Link className="btn btn-primary" type="button" to="/activities">Volver</Link>
+                        </div>
+                        <div className="btn-group col-auto ">
+                            <button className="btn btn-danger" onClick={deleteActivity}>Borrar </button>
+                            <Link className="btn btn-warning" type="button" key={activity._id} to={`/activities/updateActivity/${activity._id}`}>Modificar</Link>
+
+                        </div>
                     </div>
                 </div>
 

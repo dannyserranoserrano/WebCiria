@@ -3,11 +3,14 @@ const express = require("express");
 const auth = require("../middleware/auth");
 const authAdmin = require("../middleware/authAdmin");
 const User = require("../models/User");
+const Reserve = require("../models/Reserve")
+const Event = require("../models/Event")
 const UserRouter = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const welcomeEmail = require("../templates/WelcomeEmail")
 const modifyEmail = require("../templates/ModifyEmail")
+const byeEmail = require("../templates/ByeEmail")
 
 // *****VISUALIZAMOS TODOS LOS DATOS*****
 UserRouter.get("/users", auth, authAdmin, async (req, res) => {
@@ -39,17 +42,17 @@ UserRouter.get("/findUser/:userId", auth, authAdmin, async (req, res) => {
         userId
     } = req.params
     try {
-        let user2 = await User.findById(userId)
-        // if (!user2) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: "Usuario no encontrado"
-        //     })
-        // }
+        let user = await User.findById(userId)
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: "Usuario no encontrado"
+            })
+        }
         return res.status(200).json({
             success: true,
             message: "Usuario Encontrado!!!",
-            user2
+            user
         })
     } catch (error) {
         return res.status(500).json({
@@ -145,10 +148,14 @@ UserRouter.post("/newUser", async (req, res) => {
         // *****Aqui le damos la encriptación a la contraseña*****
         let passwordHash = bcrypt.hashSync(password, 10)
 
+        // *****MANDA EL CORREO DE VERIFICACIÓN*****
         welcomeEmail.sendWelcomeEmail(
+            name,
+            surname,
+            city,
             email,
-            password, // se llama la función despues de hashear la contraseña y antes de crear el usuario
-            name
+            password
+            // se llama la función despues de hashear la contraseña y antes de crear el usuario
         )
 
         let user = new User({
@@ -180,63 +187,53 @@ UserRouter.post("/newUser", async (req, res) => {
     }
 })
 
-// ****MODIFICAR DATOS*****
-UserRouter.put("/updateUser", auth, async (req, res) => {
+// ****MODIFICAR DATOS DE UN USUARIO*****
+UserRouter.put("/updateUser/:userId", auth, authAdmin, async (req, res) => {
 
     const {
-        id
-    } = req.user // Nos reconoce el usuario mediante el Tokken (auth.js)
+        userId
+    } = req.params
 
     const {
         name,
         surname,
         city,
-        password,
         role
     } = req.body
 
-
-    console.log(email)
-
     try {
-        if (password.length < 6) {
-            return res.json({
-                success: false,
-                message: "El Password debe contener 6 dígitos o más"
-            })
-        }
+
+        const user = await User.findById(userId)
+        const email = user.email
+        const password = user.password
 
         if (name.length < 3) {
-            return res.json({
+            return res.status(400).json({
                 success: false,
                 message: "Nombre inválido"
             })
         }
 
         if (surname.length < 2) {
-            return res.json({
+            return res.status(400).json({
                 success: false,
                 message: "Apellido inválido"
             })
         }
-        if (!role == 0 || !role == 1) {
-            return res.json({
-                success: false,
-                message: "Role inválido"
-            })
-        }
-        
 
         let passwordHash = bcrypt.hashSync(password, 10)
 
+        // *****MANDA EL CORREO DE VERIFICACIÓN*****
+
         modifyEmail.sendModifyEmail(
-            email,
             name,
             surname,
+            city,
+            email,
             password
         )
 
-        await User.findByIdAndUpdate(id, {
+        await User.findByIdAndUpdate(userId, {
             name,
             surname,
             city,
@@ -248,7 +245,78 @@ UserRouter.put("/updateUser", auth, async (req, res) => {
             message: (`Los Datos del usuario ${name} ${surname} han sido modificados`)
         })
     } catch (error) {
-        return res.json({
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+})
+
+// ****MODIFICAR NUESTROS DATOS*****
+UserRouter.put("/updateUser", auth, async (req, res) => {
+
+    const {
+        id
+    } = req.user // Nos reconoce el usuario mediante el Tokken (auth.js)
+
+    const {
+        name,
+        surname,
+        city,
+        password,
+
+    } = req.body
+
+    try {
+
+        const user = await User.findById(id)
+        const email = user.email
+
+
+        if (password.length < 6) {
+            return res.status(400).json({
+                success: false,
+                message: "El Password debe contener 6 dígitos o más"
+            })
+        }
+
+        if (name.length < 3) {
+            return res.status(400).json({
+                success: false,
+                message: "Nombre inválido"
+            })
+        }
+
+        if (surname.length < 2) {
+            return res.status(400).json({
+                success: false,
+                message: "Apellido inválido"
+            })
+        }
+
+        let passwordHash = bcrypt.hashSync(password, 10)
+
+        // *****MANDA EL CORREO DE VERIFICACIÓN*****
+        modifyEmail.sendModifyEmail(
+            name,
+            surname,
+            city,
+            email,
+            password,
+        )
+
+        await User.findByIdAndUpdate(id, {
+            name,
+            surname,
+            city,
+            password: passwordHash,
+        })
+        return res.status(200).json({
+            success: true,
+            message: (`Los Datos del usuario ${name} ${surname} han sido modificados`)
+        })
+    } catch (error) {
+        return res.status(500).json({
             success: false,
             message: error.message
         })
@@ -256,6 +324,7 @@ UserRouter.put("/updateUser", auth, async (req, res) => {
 })
 
 // ****BORRAMOS DATOS DE UN USUARIO*****
+
 UserRouter.delete("/deleteUser/:userId", auth, async (req, res) => {
 
     const {
@@ -263,7 +332,47 @@ UserRouter.delete("/deleteUser/:userId", auth, async (req, res) => {
     } = req.params // Nos reconoce el usuario mediante el Tokken (auth.js)
 
     try {
+
+        // // *****MANDA EL CORREO DE VERIFICACIÓN*****
+        const user = await User.findById(userId)
+        const name = user.name
+        const surname = user.surname
+        const city = user.city
+        const email = user.email
+        byeEmail.sendByeEmail(
+            name,
+            surname,
+            city,
+            email,
+        )
+
+ // *****Funciones para borrar el usuario y todas sus reservas*****
         await User.findByIdAndDelete(userId)
+        let reserveList = []
+        Reserve.find({
+            participating: userId
+        }).then(reserve => {
+            reserve.map((reservas) => {
+                console.log("funciona", reservas)
+                reserveList.push(reservas.participating)
+                console.log("funciona", reservas.participating)
+                Event.findByIdAndDelete(reservas._id, function (err, reservas) {
+                    if (err) {
+                        console.log(err,"error eque no conozco")
+                    } else {
+                        console.log("Reservas eliminadas correctamente")
+                        reserveList.map((reserveId) => {
+                            console.log("reserveId", reserveId)
+                            Event.findByIdAndUpdate(reserveId, {
+                                $pull: {
+                                    participating: userId
+                                }
+                            })
+                        })
+                    }
+                })
+            })
+        })
         return res.status(200).json({
             success: true,
             message: "El Usuario ha sido borrado"
@@ -277,7 +386,8 @@ UserRouter.delete("/deleteUser/:userId", auth, async (req, res) => {
     }
 })
 
-// ****BORRAMOS DATOS*****
+// ****BORRAMOS NUESTRO USUARIO*****
+
 UserRouter.delete("/deleteUser", auth, async (req, res) => {
 
     const {
@@ -285,7 +395,47 @@ UserRouter.delete("/deleteUser", auth, async (req, res) => {
     } = req.user // Nos reconoce el usuario mediante el Tokken (auth.js)
 
     try {
+
+        // // *****MANDA EL CORREO DE VERIFICACIÓN*****
+        const user = await User.findById(id)
+        const name = user.name
+        const surname = user.surname
+        const city = user.city
+        const email = user.email
+        byeEmail.sendByeEmail(
+            name,
+            surname,
+            city,
+            email,
+        )
+
+ // *****Funciones para borrar el usuario y todas sus reservas*****
         await User.findByIdAndDelete(id)
+        let reserveList = []
+        Reserve.find({
+            participating: id
+        }).then(e => {
+            e.map((searches) => {
+                console.log("funciona", searches)
+                reserveList.push(searches.participating)
+                console.log("funciona", searches.participating)
+                Event.findByIdAndDelete(searches._id, function (err, searches) {
+                    if (err) {
+                        console.log(err,"error eque no conozco")
+                    } else {
+                        console.log("Reservas eliminadas correctamente")
+                        reserveList.map((reserveId) => {
+                            console.log("reserveId", reserveId)
+                            Event.findByIdAndUpdate(reserveId, {
+                                $pull: {
+                                    participating: id
+                                }
+                            })
+                        })
+                    }
+                })
+            })
+        })
         return res.status(200).json({
             success: true,
             message: "El Usuario ha sido borrado"
@@ -298,6 +448,7 @@ UserRouter.delete("/deleteUser", auth, async (req, res) => {
         })
     }
 })
+
 
 // *****FUNCION PARA LOGUEARSE*****
 UserRouter.post("/login", async (req, res) => {
@@ -310,14 +461,14 @@ UserRouter.post("/login", async (req, res) => {
             email
         })
         if (!email || !password) {
-            return res.json({
+            return res.status(400).json({
                 success: false,
                 message: "No has completado todos los campos"
             })
         }
 
         if (!user) {
-            return res.json({
+            return res.status(400).json({
                 success: false,
                 message: "El Usuario no está registrado"
             })
@@ -325,14 +476,14 @@ UserRouter.post("/login", async (req, res) => {
 
         re = /^([\da-z_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/
         if (!re.exec(email)) {
-            return res.json({
+            return res.status(400).json({
                 success: false,
                 message: "El formato del Email no es correcto"
             })
         }
 
         if (password.length < 6) {
-            return res.json({
+            return res.status(400).json({
                 success: false,
                 message: "El Password debe contener 6 dígitos o más"
             })
@@ -340,12 +491,12 @@ UserRouter.post("/login", async (req, res) => {
 
         let passwordOk = await bcrypt.compare(password, user.password);
         if (!passwordOk) {
-            return res.json({
+            return res.status(400).json({
                 success: false,
                 message: "Password Incorrecto"
             })
         }
-        
+
         const name = user.name
         const role = user.role
         const token = accessToken({
@@ -360,7 +511,7 @@ UserRouter.post("/login", async (req, res) => {
             name
         })
     } catch (error) {
-        return res.json({
+        return res.status(500).json({
             success: false,
             message: error.message
         })

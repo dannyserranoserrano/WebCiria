@@ -8,7 +8,7 @@ import axios from "axios";
 
 const UserAdmin = () => {
 
-    const {userId} = useParams();
+    const { userId } = useParams();
     const [user, setUser] = useState({})
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -23,82 +23,57 @@ const UserAdmin = () => {
                 }
             })
             console.log(response);
-            setUser(response.data.user2)
+            setUser(response.data.user)
 
         }
         getUser()
     }, [])
 
-    // // *****FUNCION PARA MODIFICAR*****
-
-    // const modifyUser = async (f) => {
-    //     f.preventDefault();
-    //     const response3 = await axios.put(
-    //         `http://localhost:5000/api/updateUser/${userId}`, {
-    //         headers: {
-    //             "Authorization": token
-    //         }
-    //     })
-    //     try {
-    //         setSuccessMessage(response3.data.message)
-
-    //         setTimeout(() => {
-    //             window.location.href = '/'
-    //         }, 2000)
-
-    //     } catch (error) {
-    //         setErrorMessage(response3.data.error.message)
-    //         setTimeout(() => {
-    //             window.location.href = '/user'
-    //         }, 2000)
-    //     }
-    // }
-
-
     // *****FUNCION PARA BORRAR*****
     const deleteUser = async (e) => {
         e.preventDefault();
-        const response2 = await axios.delete(
-            `http://localhost:5000/api/deleteUser/${userId}`, {
-            headers: {
-                "Authorization": token
+        // *****Confirmación*****
+        let option = window.confirm("Seguro que quieres eliminar el Usuario???")
+        if (option === true) {
+
+            // *****Hacemos la llamada*****  
+            const response2 = await axios.delete(
+                `http://localhost:5000/api/deleteUser/${userId}`, {
+                headers: {
+                    "Authorization": token
+                }
+            })
+            console.log(response2);
+            try {
+                setSuccessMessage(response2.data.message)
+
+                setTimeout(() => {
+                    window.location.href = '/users'
+                }, 2000)
+
+            } catch (error) {
+                setErrorMessage(response2.data.error.message)
+                setTimeout(() => {
+                    window.location.href = `/users/${userId}`
+                }, 2000)
             }
-        })
-        try {
-            setSuccessMessage(response2.data.message)
-           
-            setTimeout(() => {
-                window.location.href = '/'
-            }, 2000)
-
-        } catch (error) {
-            setErrorMessage(response2.data.error.message)
-            setTimeout(() => {
-                window.location.href = '/user'
-            }, 2000)
-        }
+        };
     };
-
     return (
         <div className="user">
             <div className="header">
                 <Header />
             </div>
             <div className="container">
-                <div className="userTitle text-center mt-3"><p>DATOS DEL USUARIO {user.name}</p></div>
-                <div className="container ">
-                    <div className="container tablaUser">
+                <div className="userTitle text-center mt-3"><p>DATOS DE USUARIO</p></div>
+                <div className="container centerUserAdmin">
+                    <div className="container tablaUserAdmin table table-response">
                         <div className="tablaUser2">
-                            <div className="headUser"><strong>Nombre:</strong></div>
-                            <div className="bodyUser"> {user.name}</div>
-                            <div className="headUser"><strong>Apellido:</strong></div>
-                            <div className="bodyUser"> {user.surname}</div>
-                            <div className="headUser"><strong>Ciudad:</strong></div>
-                            <div className="bodyUser"> {user.city}</div>
-                            <div className="headUser"><strong>Email:</strong></div>
-                            <div className="bodyUser"> {user.email}</div>
-                            <div className="headUser"><strong>Role:</strong></div>
-                            <div className="bodyUser"> {user.role}</div>
+                            <div className="headUser"><strong>Nombre:</strong> {user.name}</div>
+                            <div className="headUser"><strong>Apellido:</strong> {user.surname}</div>
+                            <div className="headUser"><strong>Ciudad:</strong> {user.city}</div>
+                            <div className="headUser"><strong>Email:</strong> {user.email}</div>
+                            <div className="headUser"><strong>Role:</strong> {user.role}</div>
                         </div>
                     </div>
 
@@ -115,15 +90,16 @@ const UserAdmin = () => {
                     </div>
 
                     {/* *****Buttons***** */}
-                    <div className="container userButtons mb">
+                    <div className="container userButtonsAdmin mb">
                         <div className="row justify-content-between">
-                            <div className="btn-group btn-group-sm col-auto ">
-                                {/* <button className="btn btn-warning" onClick={modifyUser}>Modificar</button> */}
-                                <button className="btn btn-danger" onClick={deleteUser}>Borrar</button>
-                            </div>
                             <div className="volverUsers col-auto">
-                                <Link className="btn btn-sm btn-primary" type="button" to="/">Volver</Link>
+                                <Link className="btn btn-primary" type="button" to="/users">Volver</Link>
                             </div>
+                            <div className="btn-group col-auto ">
+                                <button className="btn btn-danger" onClick={deleteUser}>Borrar</button>
+                                <Link className="btn btn-warning" type="button" key={user._id} to={`/users/updateUserAdmin/${userId}`}>Modificar</Link>
+                            </div>
+
                         </div>
                     </div>
                 </div>

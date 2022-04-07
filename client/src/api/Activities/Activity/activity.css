@@ -8,61 +8,55 @@
     background-color: rgb(210, 211, 211);
 }
 
+.centerActivity{
+    padding: 10px;
+}
+
 .activityTitle {
-    margin-top: 70px;
     font-size: 40px;
+    margin-top: 10px;
 }
 
 .tablaActivity {
     border: 1px solid black;
     border-radius: 10px;
-    width: 500px;
+    max-width: 600px;
     background-color: white;
-    margin-top: 200px;
+    margin-top: 220px;
 }
 
 .headActivity {
     display: flex;
-    justify-content: space-between;
-    font-size: 25px;
-}
-
-.bodyActivity {
-    display: flex;
-    justify-content: space-between;
+    justify-content:space-around;
     font-size: 20px;
-
 }
 
 .activityButtons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 33vh;
-    width: 100%;
+    width: 100%; 
+    margin-top: 39vh;
 }
 
 @media only screen and (max-width:767px) {
 
+    .centerActivity{
+        padding: 5px;
+    }
+
     .activityTitle {
-        margin-top: 70px;
+        margin-top: 10px;
         font-size: 30px;
     }
 
     .tablaActivity {
         width: 300px;
-        margin-top: 150px;
+        margin-top: 170px;
     }
 
     .headActivity {
-        font-size: 20px;
-    }
-
-    .bodyActivity {
         font-size: 16px;
-
     }
-
+    
     .activityButtons {
-        margin-top: 24vh;
+        margin-top: 31vh;
     }
 }

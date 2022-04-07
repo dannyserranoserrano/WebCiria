@@ -23,28 +23,26 @@ const TablaActivities = () => {
 
 
     return (
-        <div className="container tablaActivities">
-
-            <div className="linkActivities">
-                <div ><strong>Actividad</strong></div>
-                <div><strong>Pago</strong></div>
-            </div>
-
-            {activities.map(e => (
-                <div className="linkActivities2">
-                    <Link key={e._id} to={`/activities/${e._id}`} className="tdClass"  >
-                        <div className="tdClass">{e.name}</div>
-                    </Link>
-                    <Link key={e._id} to={`/activities/${e._id}`} className="tdClass">
-                        <div className="tdClass">{e.pay}</div>
-                    </Link>
-
+        <div className="tablaActivities container mt-4 mb-4">
+            <div className=" headActivities table table-responsive mb-0">
+                <div className="head2Activities mt-2">
+                    <div ><strong>Actividad</strong></div>
+                    <div><strong>Pago</strong></div>
                 </div>
-            ))}
-
-
+                <div>
+                    {activities.map(e => (
+                        <div className="bodyActivities">
+                            <Link key={e._id} to={`/activities/${e._id}`} className="container linkActivities"  >
+                                <div className='link2Activities'>
+                                    <div className="divActivName">{e.name}</div>
+                                    <div className="divActivPay">{e.pay}</div>
+                                </div>
+                            </Link>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
-
     )
 }
 

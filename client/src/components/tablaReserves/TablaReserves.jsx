@@ -23,8 +23,8 @@ const TablaReserves = () => {
 
 
     return (
-        <div className="tablaReserves col auto mt-4 mb-4">
-            <div className="container headUsers table table-responsive mb-0">
+        <div className="container tablaReserves col auto mt-4 mb-4">
+            <div className=" headReserves table table-responsive mb-0">
                 <div className='head2Reserves mt-2'>
                     <div><strong>Evento</strong></div>
                     <div><strong>Participantes</strong></div>

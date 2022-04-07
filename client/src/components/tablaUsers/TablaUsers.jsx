@@ -23,23 +23,23 @@ const TablaUsers = () => {
 
 
     return (
-        <div className="tablaUsers col auto mt-4 mb-4">
-            <div className="container headUsers table table-responsive mb-0">
+        <div className="tablaUsers container mt-4 mb-4">
+            <div className=" headUsers table table-responsive mb-0">
                 <div className='head2Users mt-2'>
                     <div><strong>Nombre</strong></div>
                     <div><strong>Email</strong></div>
                 </div>
                 <div>
-                    <div className="container ">
-                        {users.map(e => (
+                    {users.map(e => (
+                        <div className="bodyUsers">
                             <Link key={e._id} to={`/users/${e._id}`} className="container linkUsers">
-                                <div className='link2Users m-0'>
+                                <div className='link2Users'>
                                     <div className='divUsers'>{e.name} {e.surname}</div>
                                     <div className='divMail'>{e.email}</div>
                                 </div>
                             </Link>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

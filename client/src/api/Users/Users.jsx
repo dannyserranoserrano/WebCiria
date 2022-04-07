@@ -12,8 +12,8 @@ const Users = () => {
             <div className="header">
                 <Header />
             </div>
-            <div className="container">
-                <div className="usersTitle text-center"><h1>USUARIOS</h1></div>
+            <div className="container centerUsers">
+                <div className="usersTitle text-center"><p>USUARIOS</p></div>
                 <div className="container usersTable">
                     <TablaUsers />
                 </div>
@@ -21,7 +21,7 @@ const Users = () => {
                 <div className="container usersButtons">
                     <div className="row justify-content-end">
                         <div className="volverUser col-auto">
-                            <Link className="btn btn-sm btn-primary " type="button" to="/">Volver</Link>
+                            <Link className="btn btn-primary " type="button" to="/">Volver</Link>
                         </div>
                     </div>
                 </div>

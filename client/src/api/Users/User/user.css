@@ -8,57 +8,83 @@
     background-color: rgb(210, 211, 211);
 }
 
+.centerUser{
+    padding: 10px;
+}
+
+.centerUserAdmin{
+    padding: 10px;
+}
+
 .userTitle {
-    margin-top: 70px;
-    font-size: 40px;
+    font-size: 40px; 
+    margin-top: 10px;
 }
 
 .tablaUser {
-    border: 1px solid black;
+    border: 2px solid black;
     border-radius: 10px;
-    width: 500px;
     background-color: white;
-    margin-top: 100px; 
+    padding: 10px;
+    max-width: 600px;
+    max-height: 145px;
+    margin-top: 170px;
+}
+
+.tablaUserAdmin{
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: white;
+    padding: 10px;
+    max-width: 600px;
+    max-height: 200px;
+    margin-top: 170px;
 }
 
 .headUser {
-    font-size: 25px;
-    text-align: center;
-}
-
-.bodyUser {
     font-size: 20px;
-    text-align: center;
-
 }
 
 .userButtons {
-    margin-top: 15vh;
+    margin-top: 32vh;
+}
+
+.userButtonsAdmin {
+    margin-top: 27vh;
 }
 
 @media only screen and (max-width:767px) {
 
+    .centerUser{
+        padding: 5px;
+    }
+    
+
     .userTitle {
-        margin-top: 30px;
-        font-size: 30px;
+        margin-top: 10px;
+        font-size: 20px;
     }
 
     .tablaUser {
-        width: 300px;
-        margin-top: 30px;
+        max-width: 320px;
+        margin-top: 110px;
+    }
+
+    .tablaUserAdmin{
+        max-width: 600px;
+        max-height: 200px;
+        margin-top: 110px;
     }
 
     .headUser {
-        font-size: 16px;
-    }
-
-    .bodyUser {
         font-size: 14px;
-
     }
 
     .userButtons {
-        margin-top: 10vh;
-        margin-bottom: 10px;
+        margin-top:29vh;
+    }
+
+    .userButtonsAdmin {
+        margin-top: 23vh;
     }
 }

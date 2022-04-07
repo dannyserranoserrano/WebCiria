@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../../../components/header/Header';
-import "./UpdateActivity.css"
+import "./updateActivity.css"
 
 
 const UpdateActivity = () => {
@@ -13,67 +13,100 @@ const UpdateActivity = () => {
     });
 
     const { activityId } = useParams()
+    const [activity, setActivity] = useState({})
     const token = localStorage.getItem('token')
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
-    
     const navigate = useNavigate()
 
+    console.log(activityId);
 
+    // *****FUNCION PARA CREAR LA TABLA CON LOS DATOS ANTIGUOS*****
+    useEffect(() => {
+        const getActivity = async () => {
+            const response2 = await axios.get(`http://localhost:5000/api/findActivity/${activityId}`, {
+                headers: {
+                    "Authorization": token
+                }
+            })
+            console.log(response2);
+            setActivity(response2.data.activity)
+        }
+        getActivity()
+    }, [])
+
+    // *****FUNCION ACTUALIZACION DE DATOS*****
     const handleChange = (e) => {
         setUpdateActivity({
             ...updateActivity,
             [e.target.name]: e.target.value,
         })
     };
-
+    console.log(activityId);
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await axios.put(
-                `http://localhost:5000/api/updateActivity/${activityId}`,
-                { ...UpdateActivity }, {
-                headers: {
-                    "Authorization": token
-                }
-            })
+        // *****Confirmación*****
+        let option = window.confirm("Seguro que quieres modificar la Actividad???")
+        if (option === true) {
 
-            setSuccessMessage(response.data.message)
+            // *****Hacemos la llamada*****
 
-            setTimeout(() => {
-                navigate('/activities')
-            }, 2000)
+            try {
+                const response = await axios.put(
+                    `http://localhost:5000/api/updateActivity/${activityId}`,
+                    { ...updateActivity }, {
+                    headers: {
+                        "Authorization": token
+                    }
+                })
 
-        } catch (error) {
-            setErrorMessage(error.response.data.message)
-            setTimeout(() => {
-                window.location.href = "/activities/UpdateActivity"
-            }, 2000)
-        }
+                setSuccessMessage(response.data.message)
+                console.log(response);
+
+                setTimeout(() => {
+                    navigate('/activities')
+                }, 2000)
+
+            } catch (error) {
+                setErrorMessage(error.response.data.message)
+                setTimeout(() => {
+                    window.location.href = `/activities/updateActivity/${activityId}`
+                }, 2000)
+            }
+        };
     };
 
     return (
-        <div className='UpdateActivity'>
+        <div className='updateActivity'>
             <div className="header">
                 <Header />
             </div>
-            <div className="container">
-                <div className="UpdateTitle text-center mt-3"><p>MODIFICAR ACTIVIDAD</p></div>
+            <div className="container centerUpdateActivity">
+                <div className="updateTitleActivity text-center"><p>MODIFICAR ACTIVIDAD</p></div>
+
+                {/* *****VISUALIZAMOS ANTES DE MODIFICAR***** */}
+                <div className="container tablaUpdateActivity">
+                    <div className="headUpdateActivity">
+                        <div ><strong>Actividad</strong> {activity.name}</div>
+                        <div><strong>Pago</strong> {activity.pay}</div>
+                    </div>
+                </div>
+                {/* *****FORMULARIO PARA MODIFICAR***** */}
                 <form onSubmit={handleSubmit} className="col-auto">
                     <div className="container">
                         <div className='container inputsUpdateActivity'>
-                            <div className="UpdateName">
-                                <label className="form-label ms-3">Nombre de la Actividad</label>
-                                <input type="text" name="name" className="form-control" id="validationDefault01" onChange={handleChange}
-                                    placeholder="Nombre de la actividad" required />
+                            <div className="updateNameActivity">
+                                <label className="form-label">Nombre de la Actividad</label>
+                                <input type="text" name="name" value={updateActivity.name} className="form-control" id="validationDefault01" onChange={handleChange}
+                                    placeholder={activity.name} required />
                             </div>
-                            <div className='UpdatePay'>
-                                <label className="form-label ms-5">De pago</label>
-                                <select className="form-select" name="pay" onChange={handleChange} aria-label="Default select example">
+                            <div className='updatePayActivity'>
+                                <label className="form-label">De pago</label>
+                                <select className="form-select" name="pay" value={updateActivity.pay} onChange={handleChange} aria-label="Default select example">
                                     <option selected>Selecciona...</option>
-                                    <option value="Si">Si</option>
-                                    <option value="No">No</option>
+                                    <option value="Pago">Pago</option>
+                                    <option value="Gratis">Gratis</option>
                                 </select>
                             </div>
                         </div>
@@ -90,16 +123,17 @@ const UpdateActivity = () => {
                         </div>
 
                         {/* *****Buttons***** */}
-                        <div className="container Updatebuttons">
+                        <div className="container updateButtonsActivity">
                             <div className=" row justify-content-between">
-                                <div className='col-auto'>
-                                    <button className="btn btn-warning" type="submit"
-                                        disabled={!UpdateActivity.name.length || !UpdateActivity.pay.length}
-                                    >Modificar</button>
-                                </div>
                                 <div className='col-auto'>
                                     <Link className="btn btn-primary" type="button" to="/activities">Volver</Link>
                                 </div>
+                                <div className='col-auto'>
+                                    <button className="btn btn-warning" type="submit"
+                                        disabled={!updateActivity.name.length || !updateActivity.pay.length}
+                                    >Modificar</button>
+                                </div>
+
                             </div>
                         </div>
                     </div>

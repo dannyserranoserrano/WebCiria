@@ -12,7 +12,7 @@ const Events = () => {
             <div className="header">
                 <Header />
             </div>
-            <div className="container">
+            <div className="container centerEvents">
                 <div className="eventsTitle text-center"><p>EVENTOS</p></div>
                 <div className="container eventsTable">
                     <TablaEvents />
@@ -20,12 +20,13 @@ const Events = () => {
                 {/* *****Buttons***** */}
                 <div className="container eventsButtons">
                     <div className="row justify-content-between">
-                        <div className="addEvents col-auto">
-                            <Link className="btn btn-sm btn-success" type="button" to="/events/addEvent">Añadir Evento</Link>
-                        </div>
                         <div className="volverEvents col-auto">
-                            <Link className="btn btn-sm btn-primary " type="button" to="/">Volver</Link>
+                            <Link className="btn btn-primary " type="button" to="/">Volver</Link>
                         </div>
+                        <div className="addEvents col-auto">
+                            <Link className="btn btn-success" type="button" to="/events/addEvent">Añadir Evento</Link>
+                        </div>
+
                     </div>
                 </div>
             </div>

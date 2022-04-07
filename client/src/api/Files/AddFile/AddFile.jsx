@@ -136,7 +136,7 @@ const AddFile = () => {
 
                         <div className='addFileDate'>
                             <label className="form-label ms-5">Fecha de la imágen</label>
-                            <input type="datetime-local" className="form-control" name="date" onChange={handleChange} />
+                            <input type="date" className="form-control" name="date" onChange={handleChange} />
                         </div>
                         
                     </div>

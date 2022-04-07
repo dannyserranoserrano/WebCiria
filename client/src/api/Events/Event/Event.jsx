@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link} from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import './event.css'
 import Header from '../../../components/header/Header'
 import axios from "axios";
@@ -30,75 +30,87 @@ const Event = () => {
         getEvent()
     }, [])
 
-// *****FUNCION PARA RESERVA*****
+    // *****FUNCION PARA RESERVA*****
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const response2 = await axios.post(
-                `http://localhost:5000/api/newReserve/${eventId}`,
-                {}, {
+
+        // *****Confirmación*****
+        let option = window.confirm("Seguro que quieres registarte como participante???")
+        if (option === true) {
+
+            // *****Hacemos la llamada*****
+            try {
+                const response2 = await axios.post(
+                    `http://localhost:5000/api/newReserve/${eventId}`,
+                    {}, {
+                    headers: {
+                        "Authorization": token
+                    }
+                })
+                setSuccessMessage(response2.data.message)
+
+                setTimeout(() => {
+                    window.location.href = `/events/${eventId}`
+                }, 2000)
+
+            } catch (error) {
+                setErrorMessage(error.response2.data.message)
+                setTimeout(() => {
+                    window.location.href = '/events'
+                }, 2000)
+            }
+        };
+    };
+
+    // *****FUNCION PARA BORRAR*****
+    const deleteEvent = async (e) => {
+        e.preventDefault();
+
+        // *****Confirmación*****
+        let option = window.confirm("Seguro que quieres borrar este Evento???")
+        if (option === true) {
+
+            // *****Hacemos la llamada*****
+            const response2 = await axios.delete(
+                `http://localhost:5000/api/deleteEvent/${eventId}`, {
                 headers: {
                     "Authorization": token
                 }
             })
-            setSuccessMessage(response2.data.message)
+            try {
 
-            setTimeout(() => {
-                window.location.href = `/events/${eventId}`
-            }, 2000)
+                setSuccessMessage(response2.data.message)
 
-        } catch (error) {
-            setErrorMessage(error.response2.data.message)
-            setTimeout(() => {
-                window.location.href = '/events'
-            }, 2000)
-        }
-    };
+                setTimeout(() => {
+                    window.location.href = '/events'
+                }, 2000)
 
-     // *****FUNCION PARA BORRAR*****
-     const deleteEvent = async (e) => {
-        e.preventDefault();
-        const response2 = await axios.delete(
-            `http://localhost:5000/api/deleteEvent/${eventId}`, {
-            headers: {
-                "Authorization": token
+            } catch (error) {
+                setErrorMessage(response2.data.error.message)
+                setTimeout(() => {
+                    window.location.href = '/event'
+                }, 2000)
             }
-        })
-        try {
-
-            setSuccessMessage(response2.data.message)
-
-            setTimeout(() => {
-                window.location.href = '/'
-            }, 10000)
-
-        } catch (error) {
-            setErrorMessage(response2.data.error.message)
-            setTimeout(() => {
-                window.location.href = '/event'
-            }, 10000)
-        }
+        };
     };
-    
-    // ******EVENTS UNLOGGED*****
-
+    // ******EVENT UNLOGGED*****
     const Eventos = () => (
         <div className="event">
             <div className="header">
                 <Header />
             </div>
-            <div className="container">
+            <div className="container centerEvent">
                 <div className="eventTitle text-center"><p>EVENTO</p></div>
-                <div className="container tablaEvent">
-                    <div className="headEvent">
+                <div className="container table table-responsive tablaEvent w-100">
+                    <div className="headEvent ">
                         <div className="reqEvent"><strong>Evento:</strong></div>
                         <div className="resEvent"> {event.name}</div>
                         <div className="reqEvent"><strong>Actividad:</strong></div>
-                        <div className="resEvent"> {activity.name}</div>
+                        <div className="resEvent"> {activity.name} ({activity.pay})</div>
                         <div className="reqEvent"><strong>Descripción:</strong></div>
                         <div className="resEvent"> {event.description}</div>
                         <div className="reqEvent"><strong>Fecha de Actividad:</strong></div>
-                        <div className="resEvent"> {event.dateActivity}</div>
+                        <div className="resEvent"> {new Date(event.dateActivity).toLocaleString('es')}</div>
                     </div>
                 </div>
 
@@ -115,12 +127,10 @@ const Event = () => {
                 </div>
 
                 {/* *****Buttons***** */}
-
                 <div className="container eventButtons mb-3">
-
-                    <div className=" row justify-content-between">
+                    <div className=" row justify-content-start">
                         <div className="col-auto">
-                            <Link className="btn btn-sm btn-primary" type="button" to="/events">Volver</Link>
+                            <Link className="btn btn-primary" type="button" to="/events">Volver</Link>
                         </div>
                     </div>
                 </div>
@@ -133,36 +143,32 @@ const Event = () => {
             <div className="header">
                 <Header />
             </div>
-            <div className="container">
+            <div className="container centerEvent">
                 <div className="eventTitle text-center"><p>EVENTO</p></div>
-                <div className="container tablaEvent">
+                <div className="container table table-responsive tablaEvent w-100">
                     <div className="headEvent">
-                        <div className="reqEvent"><strong>Evento:</strong></div>
-                        <div className="resEvent"> {event.name}</div>
-                        <div className="reqEvent"><strong>Actividad:</strong></div>
-                        <div className="resEvent"> {activity.name}</div>
-                        <div className="reqEvent"><strong>Descripción:</strong></div>
-                        <div className="resEvent"> {event.description}</div>
-                        <div className="reqEvent"><strong>Precio:</strong></div>
-                        <div className="resEvent"> {event.price}€</div>
-                        <div className="reqEvent"><strong>Fecha de Actividad:</strong></div>
-                        <div className="resEvent"> {event.dateActivity}</div>
-                        <div className="reqEvent"><strong>Participantes:</strong></div>
+                        <div className="reqEvent"><strong>Evento:</strong> {event.name}</div>
+
+                        <div className="reqEvent"><strong>Actividad:</strong> {activity.name} {activity.pay}</div>
+                        <div className="reqEvent"><strong>Descripción:</strong> {event.description}</div>
+                        <div className="reqEvent"><strong>Precio:</strong> {event.price}€</div>
+                        <div className="reqEvent"><strong>Fecha de Actividad:</strong> {new Date(event.dateActivity).toLocaleString('es')}</div>
+                        <div className="reqEvent"><strong>Participantes:</strong>  </div>
                         {participating.map(e => (
-                            <div>
-                                <li className="resEvent">{e.name} {e.surname}</li>
+                            <div className="m-0 container">
+                                <div className="resEvent p-0">-{e.name} {e.surname}</div>
                             </div>
                         ))}
                     </div>
                 </div>
 
                 {/* *****AVISOS DE ERRORES***** */}
-                <div className="message_ok shadow-lg p-1 m-3 bg-body rounded border text-center" style={{ display: successMessage ? "block" : "none" }}>
+                <div className="message_ok shadow-lg p-3 m-3 bg-body rounded border text-center" style={{ display: successMessage ? "block" : "none" }}>
                     <div>
                         {successMessage}
                     </div>
                 </div>
-                <div className="message_nok shadow-lg p-1 m-3 bg-body rounded border text-center" style={{ display: errorMessage ? "block" : "none" }}>
+                <div className="message_nok shadow-lg p-3 m-3 bg-body rounded border text-center" style={{ display: errorMessage ? "block" : "none" }}>
                     <div>
                         {errorMessage}
                     </div>
@@ -178,14 +184,13 @@ const Event = () => {
                 </div>
                 <div className="container eventButtons mb-3">
                     <div className=" row justify-content-between">
-                        <div className="btn-group btn-group-sm col-auto ">
-                            <button className="btn btn-warning" type="submit" >Modificar
-                            </button>
+                        <div className="col-auto">
+                            <Link className="btn btn-primary" type="button" to="/events">Volver</Link>
+                        </div>
+                        <div className="btn-group col-auto ">
+                            <Link className="btn btn-warning" type="button" key={event._id} to={`/events/updateEvent/${eventId}`}>Modificar</Link>
                         </div>
 
-                        <div className="col-auto">
-                            <Link className="btn btn-sm btn-primary" type="button" to="/events">Volver</Link>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -193,42 +198,36 @@ const Event = () => {
     )
 
     // ******EVENTS ADMIN*****
-
     const EventosAdmin = () => (
         <div className="event">
             <div className="header">
                 <Header />
             </div>
-            <div className="container">
+            <div className="container centerEvent">
                 <div className="eventTitle text-center"><p>EVENTO</p></div>
-                <div className="container tablaEvent">
+                <div className="container table table-responsive tablaEvent w-100">
                     <div className="headEvent">
-                        <div className="reqEvent"><strong>Evento:</strong></div>
-                        <div className="resEvent"> {event.name}</div>
-                        <div className="reqEvent"><strong>Actividad:</strong></div>
-                        <div className="resEvent"> {activity.name}</div>
-                        <div className="reqEvent"><strong>Descripción:</strong></div>
-                        <div className="resEvent"> {event.description}</div>
-                        <div className="reqEvent"><strong>Precio:</strong></div>
-                        <div className="resEvent"> {event.price}€</div>
-                        <div className="reqEvent"><strong>Fecha de Actividad:</strong></div>
-                        <div className="resEvent"> {event.dateActivity}</div>
+                        <div className="reqEvent"><strong>Evento:</strong> {event.name}</div>
+                        <div className="reqEvent"><strong>Actividad:</strong> {activity.name} ({activity.pay})</div>
+                        <div className="reqEvent"><strong>Descripción:</strong> {event.description}</div>
+                        <div className="reqEvent"><strong>Precio:</strong> {event.price}€</div>
+                        <div className="reqEvent"><strong>Fecha de Actividad:</strong> {new Date(event.dateActivity).toLocaleString('es')}</div>
                         <div className="reqEvent"><strong>Participantes:</strong></div>
                         {participating.map(e => (
-                            <div className="m-0">
-                                <li className="resEvent">{e.name} {e.surname}</li>
+                            <div className="m-0 container">
+                                <li className="resEvent resEvent p-0">{e.name} {e.surname}</li>
                             </div>
                         ))}
                     </div>
                 </div>
 
                 {/* *****AVISOS DE ERRORES***** */}
-                <div className="message_ok shadow-lg p-1 m-3 bg-body rounded border text-center" style={{ display: successMessage ? "block" : "none" }}>
+                <div className="message_ok shadow-lg p-3 m-3 bg-body rounded border text-center" style={{ display: successMessage ? "block" : "none" }}>
                     <div>
                         {successMessage}
                     </div>
                 </div>
-                <div className="message_nok shadow-lg p-1 m-3 bg-body rounded border text-center" style={{ display: errorMessage ? "block" : "none" }}>
+                <div className="message_nok shadow-lg p-3 m-3 bg-body rounded border text-center" style={{ display: errorMessage ? "block" : "none" }}>
                     <div>
                         {errorMessage}
                     </div>
@@ -245,14 +244,12 @@ const Event = () => {
                 <div className="container eventButtons mb-3">
 
                     <div className=" row justify-content-between">
-                        <div className="btn-group btn-group-sm col-auto ">
-                            <button className="btn btn-warning" type="submit" >Modificar
-                            </button>
-                            <button className="btn btn-danger" onClick={deleteEvent}>Borrar </button>
-                        </div>
-
                         <div className="col-auto">
-                            <Link className="btn btn-sm btn-primary" type="button" to="/events">Volver</Link>
+                            <Link className="btn btn-primary" type="button" to="/events">Volver</Link>
+                        </div>
+                        <div className="btn-group col-auto ">
+                            <Link className="btn btn-warning" type="button" key={event._id} to={`/events/updateEvent/${eventId}`}>Modificar</Link>
+                            <button className="btn btn-danger" onClick={deleteEvent}>Borrar </button>
                         </div>
                     </div>
                 </div>

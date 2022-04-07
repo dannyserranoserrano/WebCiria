@@ -22,16 +22,18 @@ const transport = nodemailer.createTransport({ // Con esto creo la conexión SMT
 
 // Aquí creo el correo de bienvenida que llamaré la función una vez creado el usuario
 
-module.exports.sendModifyEmail = (email, password, name, surname) => {
+module.exports.sendModifyEmail = (name, surname, city, email, password) => {
     console.log("Send Mail Modify User");
     transport.sendMail({
         from: userMail,
         to: email,
         subject: "MODIFICACIÓN EN TUS DATOS",
-        html: `<h1>Se han modificado tus datos de la aplicación keD@mos???</h1>
-        <h2>¡¡Hola ${name}, ${surname}!! </h2>
+        html: `<h1>Se han modificado tus datos de la Web CIRIA</h1>
+        <h2>¡¡Hola ${name} ${surname}!! </h2>
         <p>Tus datos de acceso han sido modificados de la siguiente manera:</p>
-        <p><b>Usuario:</b> ${email}</p>
+        <p><b>Nombre y Apellido:</b> ${name}, ${surname}</p>
+        <p><b>Ciudad de origen:</b> ${city}</p>
+        <p><b>Correo Electrónico:</b> ${email}</p>
         <p><b>Password:</b> ${password}</p>
         <p>Gracias por ser usuario de nuestra aplicación! </p>
         </div>`,

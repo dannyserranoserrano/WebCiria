@@ -8,6 +8,10 @@
     background-color: rgb(210, 211, 211);
 }
 
+.centerReserve{
+    padding: 10px;
+}
+
 .reserveTitle {
     margin-top: 70px;
     font-size: 40px;
@@ -42,6 +46,10 @@
 }
 
 @media only screen and (max-width:767px) {
+
+    .centerReserve{
+        padding: 5px;
+    }
 
     .reserveTitle {
         margin-top: 70px;

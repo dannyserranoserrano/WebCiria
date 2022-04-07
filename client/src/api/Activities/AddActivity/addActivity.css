@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+.centerAddActivity{
+    padding: 10px;
+}
+
 .addTitle{
     font-size: 40px;
     }
@@ -20,7 +24,7 @@
     border: 2px solid black;
     border-radius: 20px;
     background-color: rgb(241, 231, 231);
-    width: 600px;
+    max-width: 600px;
     padding:20px;
 }
 
@@ -33,11 +37,15 @@
 }
 
 .Addbuttons{
-    margin-top: 30vh;
+    margin-top: 33vh;
     width: 100%;
 }
 
 @media only screen and (max-width:767px) {
+
+    .centerAddActivity{
+        padding: 5px;
+    }
 
     .addTitle{
         font-size: 30px;
@@ -59,8 +67,7 @@
     }
     
     .Addbuttons{
-      
-        margin-top: 19vh;
+        margin-top:22vh;
         
     }
 }

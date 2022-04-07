@@ -15,6 +15,16 @@
     
 }
 
+.centerFiles{
+    padding: 10px;
+}
+
+.filesTable{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .filesButtons {
     margin-top: 5vh;
     width: 100%;
@@ -26,14 +36,21 @@
     }
 
     .filesTitle {
-        margin-top: 20px;
+
         font-size: 25px;
-        
+        margin-top: 5px;
+    }
+
+    .filesTable{
+        margin-top: 80px;
+    }
+
+    .centerFiles{
+        padding: 5px;
     }
 
     .filesButtons {
         margin-top: 19vh;
-        margin-bottom: 10px;
     }
 
 }

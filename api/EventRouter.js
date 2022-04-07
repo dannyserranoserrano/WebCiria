@@ -24,12 +24,10 @@ EventRouter.get("/findEvent/:eventId", async (req, res) => {
             path:"participating", select:"name surname"
         }).populate({
             path:"activity", select:"name pay"
-        }).populate({
-            path:"file", select:"image"
         })
 
         if (!event) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: "Evento no encontrado"
             })
@@ -39,7 +37,7 @@ EventRouter.get("/findEvent/:eventId", async (req, res) => {
             event          
         })
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: error.message
         })
@@ -111,16 +109,17 @@ EventRouter.put("/updateEvent/:eventId",auth,async (req, res) => {
         dateActivity
     } = req.body
     try {
-
+        // *****Condición de si no eres el creador no puedes modificar*****
         let userCreateId = await Event.findById(eventId)
-        if(!userCreateId.userCreate === id){
+        console.log(userCreateId)
+        if(!userCreateId.userCreate == id){
             res.status(400).json({
                 success: false,
                 message: "No puedes modificar el evento porque no eres el creador"
             })
         }
 
-        await Event.findOneAndUpdate(eventId, {
+        await Event.findByIdAndUpdate(eventId, {
             activityId,
             name,
             description,

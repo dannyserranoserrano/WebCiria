@@ -18,15 +18,17 @@ const Files = () => {
             <div className="header">
                 <Header />
             </div>
-            <div className="container">
-                <div className="filesTitle text-center"><h1>GALERIA</h1></div>
-                <div className="container">
+            <div className="container centerFiles">
+                <div className="filesTitle text-center"><p>GALERIA</p></div>
+                <div className="container filesTable w-100">
                     <TablaFiles />
                 </div>
                 {/* *****Buttons***** */}
-                <div className="row justify-content-end">
-                    <div className="">
-                        <Link className="btn btn-primary btn-sm" type="button" to="/">Volver</Link>
+                <div className="container filesButtons">
+                    <div className="row justify-content-start">
+                        <div className="">
+                            <Link className="btn btn-primary" type="button" to="/">Volver</Link>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -40,21 +42,21 @@ const Files = () => {
             <div className="header">
                 <Header />
             </div>
-            <div className="container">
+            <div className="container centerFiles">
                 <div className="filesTitle text-center"><p>GALERIA</p></div>
-                <div className="container">
+                <div className="container filesTable w-100">
                     <TablaFiles />
                 </div>
                 {/* *****Buttons***** */}
                 <div className="container filesButtons">
                     <div className=" row justify-content-between">
-                        <div className="btn-group btn-group-sm col-auto ">
-                            <div className="addFiles">
-                                <Link className="btn btn-sm btn-success" type="button" to="/files/addFile">Añadir Imagen</Link>
-                            </div>
+                        <div className="btn-group col-auto ">
+                            {/* <div className="addFiles">
+                                <Link className="btn btn-success" type="button" to="/files/addFile" disabled>Añadir Imagen</Link>
+                            </div> */}
                         </div>
                         <div className="col-auto">
-                            <Link className="btn btn-sm btn-primary" type="button" to="/">Volver</Link>
+                            <Link className="btn btn-primary" type="button" to="/">Volver</Link>
                         </div>
                     </div>
                 </div>

@@ -10,36 +10,41 @@
     height: auto;
 }
 
-.usersTitle {
-    margin-top: 30px;
+.centerUsers{
+    padding: 10px;
 }
 
-.usersTable{
-    margin-top: 150px;
+.usersTitle {
+    margin-top: 30px;
+    font-size: 40px;
+}
+
+.usersTable {
+    margin-top: 60px;
     max-width: 600px;
 }
 
 .usersButtons {
-    margin-top: 13vh;
+    margin-top: 5vh;
 }
 
-
 @media only screen and (max-width:767px) {
-    .users {
-        margin-top: 2px;
+
+    .centerUsers{
+        padding: 5px;
     }
 
     .usersTitle {
         margin-top: 10px;
+        font-size: 20px;
     }
 
-    .usersTable{
-        margin-top: 100px;
+    .usersTable {
+        margin-top: 70px;
         max-width: 350px;
     }
 
     .usersButtons {
-        margin-top: 17vh;
-        margin-bottom: 10px;
+        margin-top: 9vh;
     }
 }

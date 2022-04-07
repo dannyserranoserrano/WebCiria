@@ -4,63 +4,103 @@
     box-sizing: border-box;
 }
 
-.updateTitle{
-    font-size: 40px;
-    }
-
-.updateActivity{
+.updateActivity {
     background-color: rgb(210, 211, 211);
 }
 
-.inputsUpdateActivity{
-    margin-top: 20vh;
+.centerUpdateActivity{
+    padding: 10px;
+}
+
+.updateTitleActivity {
+    font-size: 40px;
+    margin-top: 10px;
+}
+
+.tablaUpdateActivity {
+    border: 2px solid black;
+    border-radius: 10px;
+    max-width: 600px;
+    background-color: white;
+    margin-top: 160px;
+}
+
+.headUpdateActivity {
     display: flex;
-    justify-content:space-between;
+    justify-content: space-around;
+    font-size: 25px;
+}
+
+.bodyUpdateActivity {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+
+}
+
+.inputsUpdateActivity {
+    display: flex;
+    justify-content: space-around;
     flex-wrap: wrap;
     border: 2px solid black;
     border-radius: 20px;
     background-color: rgb(241, 231, 231);
-    width: 600px;
-    padding:20px;
+    max-width: 600px;
+    padding: 20px;  
+    margin-top: 20px;
 }
 
-.updateName{
-    width: 200px;
+.updateNameActivity {
+    width: 250px;
 }
 
-.updatePay{
-    width: 200px;
+.updatePayActivity {
+    width: 250px;
 }
 
-.updatebuttons{
+.updateButtonsActivity {
     margin-top: 30vh;
-    width: 100%;
 }
 
 @media only screen and (max-width:767px) {
 
-    .updateTitle{
-        font-size: 30px;
-        }
+    .centerUpdateActivity{
+        padding: 5px;
+    }
 
-    .inputsUpdateActivity{
-        margin-top: 10vh;
+    .updateTitleActivity {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    .tablaUpdateActivity {
+        max-width: 320px;
         border: 1px solid black;
-        width: auto;
-        justify-content:center;
+        background-color: white;
+        margin-top: 120px;
     }
-    
-    .updateName{
+
+    .headUpdateActivity {
+        font-size: 14px;
+    }
+
+    .inputsUpdateActivity {
+        padding: 2px;
+        border: 1px solid black;
+        max-width: 320px;
+        justify-content: center; 
+        margin-top: 10px;
+    }
+
+    .updateNameActivity {
         width: 200px;
     }
-    
-    .updatePay{
+
+    .updatePayActivity {
         width: 200px;
     }
-    
-    .updatebuttons{
-      
+
+    .updateButtonsActivity {
         margin-top: 19vh;
-        
     }
 }

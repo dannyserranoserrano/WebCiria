@@ -7,6 +7,10 @@
     justify-content: center;
 }
 
+.headReserves{
+    max-height: 500px;
+}
+
 .head2Reserves {
     margin-bottom: 10px;
     display: flex;

@@ -22,16 +22,18 @@ const transport = nodemailer.createTransport({ // Con esto creo la conexión SMT
 
 // Aquí creo el correo de bienvenida que llamaré la función una vez creado el usuario
 
-module.exports.sendWelcomeEmail = (email, password, name) => {
+module.exports.sendWelcomeEmail = (name,surname,city,email,password) => {
     console.log("Send Mail Create User");
     transport.sendMail({
         from: userMail,
         to: email,
-        subject: "¡Bienvenido a keD@mos??? !",
+        subject: "¡Bienvenido a CIRIA!!!",
         html: `<h1>¡Datos de acceso a la aplicación!</h1>
-        <h2>¡¡Hola ${name}!! </h2>
+        <h2>¡¡Hola ${name} ${surname}!!! </h2>
         <p>Tus datos de acceso son los siguientes:</p>
-        <p><b>Usuario:</b> ${email}</p>
+        <p><b>Nombre y Apellidos:</b> ${name} ${surname}</p>
+        <p><b>Ciudad de Origen:</b> ${city}</p>
+        <p><b>Correo electrónico :</b> ${email}</p>
         <p><b>Password:</b> ${password}</p>
         <p>Gracias por hacerte usuario de nuestra pagina web y esperemos que disfrutes! </p>
         </div>`,

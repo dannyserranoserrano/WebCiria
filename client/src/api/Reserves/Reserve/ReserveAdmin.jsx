@@ -32,35 +32,42 @@ const ReserveAdmin = () => {
     // *****FUNCION PARA BORRAR*****
     const deleteReserve = async (e) => {
         e.preventDefault();
-        const response2 = await axios.delete(
-            'http://localhost:5000/api/deleteReserve/:reserveId', {
-            headers: {
-                "Authorization": token
+
+        // *****Confirmación*****
+        let option = window.confirm("Seguro que quieres eliminar esta reserva???")
+        if (option === true) {
+
+            // *****Hacemos la llamada*****
+
+            const response2 = await axios.delete(
+                'http://localhost:5000/api/deleteReserve/:reserveId', {
+                headers: {
+                    "Authorization": token
+                }
+            })
+            try {
+
+                setSuccessMessage(response2.data.message)
+
+                setTimeout(() => {
+                    window.location.href = '/'
+                }, 2000)
+
+            } catch (error) {
+                setErrorMessage(response2.data.error.message)
+                setTimeout(() => {
+                    window.location.href = `/reserve/${reserveId}`
+                }, 2000)
             }
-        })
-        try {
-
-            setSuccessMessage(response2.data.message)
-
-            setTimeout(() => {
-                window.location.href = '/'
-            }, 10000)
-
-        } catch (error) {
-            setErrorMessage(response2.data.error.message)
-            setTimeout(() => {
-                window.location.href = '/reserves'
-            }, 10000)
-        }
+        };
     };
-
     return (
         <div className=" reserve">
             <div className="header">
                 <Header />
             </div>
             <div className="container">
-                <div className="reserveTitle text-center mt-3"><p>RESERVA</p></div>
+                <div className="reserveTitle text-center mt-3"><p>RESERVAadmin</p></div>
                 <div className="container tablaReserve">
                     <div className="headReserve">
                         <div ><strong>Evento</strong></div>

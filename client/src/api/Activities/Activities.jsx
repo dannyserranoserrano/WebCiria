@@ -11,20 +11,21 @@ const Activities = () => {
             <div className="header">
                 <Header />
             </div>
-            <div className="container">
-                <div className="activitiesTitle text-center"><h1>ACTIVIDADES</h1></div>
-                <div className="activitiesTable">
-                    <TablaActivities />
-                </div>
+            <div className="container centerActivities">
+                <div className="activitiesTitle text-center"><p>ACTIVIDADES</p></div>
+                    <div className="container activitiesTable">
+                        <TablaActivities />
+                    </div>
                 {/* *****Buttons***** */}
                 <div className="container activitiesButtons">
                     <div className="row justify-content-between">
-                        <div className="addActivities col-auto">
-                            <Link className="btn btn-sm btn-success" type="button" to="/activities/addActivity">Añadir Actividad</Link>
-                        </div>
                         <div className="volverActivities col-auto">
-                            <Link className="btn btn-sm btn-primary" type="button" to="/">Volver</Link>
+                            <Link className="btn btn-primary" type="button" to="/">Volver</Link>
                         </div>
+                        <div className="addActivities col-auto">
+                            <Link className="btn btn-success" type="button" to="/activities/addActivity">Añadir Actividad</Link>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
