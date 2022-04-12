@@ -318,6 +318,8 @@ UserRouter.delete("/deleteUser/:userId", auth, async (req, res) => {
 
         // *****Funciones para borrar el usuario y todas sus reservas*****
         await User.findByIdAndDelete(userId)
+
+        // *****Borramos las reservas del usuario(Participantes)*****
         let reserveList = []
         Reserve.find({
             participating: userId

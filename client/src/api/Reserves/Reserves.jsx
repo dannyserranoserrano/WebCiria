@@ -6,8 +6,7 @@ import TablaReserves from '../../components/tablaReserves/TablaReserves'
 
 
 const Reserves = () => {
-    const handleModify = () => {
-    }
+    
     return (
         <div className="reserves">
             <div className="header">

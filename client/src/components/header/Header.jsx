@@ -65,7 +65,7 @@ const Header = () => {
                                 </button>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <li><Link className="dropdown-item btn-sm" to="/user">Datos Personales</Link></li>
-                                    {/* <li><Link className="dropdown-item btn-sm" to="/reserve">Inscripciones</Link></li> */}
+                                    <li><Link className="dropdown-item btn-sm" to="/reserve">Inscripciones</Link></li>
                                 </ul>
                             </li>
                             <li className="nav-item">
@@ -110,7 +110,7 @@ const Header = () => {
                                 </button>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <li><Link className="dropdown-item btn-sm " to="/user">Datos Personales</Link></li>
-                                    {/* <li><Link className="dropdown-item btn-sm " to="/reserves/:reserveId">Inscripciones</Link></li> */}
+                                    <li><Link className="dropdown-item btn-sm " to="/reserves/:reserveId">Inscripciones</Link></li>
                                 </ul>
                             </li>
                             <li className="nav-item">
@@ -129,9 +129,9 @@ const Header = () => {
                             <li className="nav-item">
                                 <Link className="nav-link active" aria-current="page" to="/users">Usuarios</Link>
                             </li>
-                            {/* <li className="nav-item">
+                            <li className="nav-item">
                                 <Link className="nav-link active " aria-current="page" to="/reserves" >Reservas</Link>
-                            </li> */}
+                            </li>
                             <li className="nav-item">
                                 <Link className="nav-link active" type="button" to="/logout">Cerrar Sesión</Link>
                             </li>

@@ -9,7 +9,7 @@ const File = () => {
     const { fileId } = useParams();
     const [image, setImage] = useState({});
     const [file, setFile] = useState([]);
-    const [event, setEvent] = useState([]);
+    const [event, setEvent] = useState({});
     const [user, setUser] = useState([]);
     const role = localStorage.getItem("role")
     const token = localStorage.getItem('token')
@@ -25,8 +25,6 @@ const File = () => {
                 }
             })
             console.log(response);
-
-
 
             setImage(response.data.file.image)
             setFile(response.data.file);

@@ -4,11 +4,15 @@ const auth = require("../middleware/auth");
 const authAdmin = require("../middleware/authAdmin");
 const Event = require("../models/Event");
 const File = require("../models/File");
+const Reserve = require("../models/Reserve");
 const EventRouter = express.Router();
 
 // *****VISUALIZAMOS TODOS LOS EVENTOS*****
 EventRouter.get("/events", async (req, res) => {
-    let events = await Event.find({}).populate({path:"participating", select:"name surname"})
+    let events = await Event.find({}).populate({
+        path: "participating",
+        select: "name surname"
+    })
     return res.json({
         success: true,
         events
@@ -22,11 +26,14 @@ EventRouter.get("/findEvent/:eventId", async (req, res) => {
     } = req.params
     try {
         let event = await Event.findById(eventId).populate({
-            path:"participating", select:"name surname"
+            path: "participating",
+            select: "name surname"
         }).populate({
-            path:"activity", select:"name pay"
+            path: "activity",
+            select: "name pay"
         }).populate({
-            path:"userCreate", select:"name surname"
+            path: "userCreate",
+            select: "name surname"
         })
 
         if (!event) {
@@ -38,7 +45,7 @@ EventRouter.get("/findEvent/:eventId", async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            event          
+            event
         })
     } catch (error) {
         return res.status(500).json({
@@ -49,7 +56,7 @@ EventRouter.get("/findEvent/:eventId", async (req, res) => {
 })
 
 // *****CREAMOS NUEVOS EVENTOS*****
-EventRouter.post("/newEvent",auth,async (req, res) => {
+EventRouter.post("/newEvent", auth, async (req, res) => {
 
     const {
         id
@@ -59,11 +66,11 @@ EventRouter.post("/newEvent",auth,async (req, res) => {
         name,
         description,
         price,
-        dateActivity,    
+        dateActivity,
     } = req.body
     try {
         // *****CREAMOS ERRORES*****
-        if (!activityId || !description || !price ||!dateActivity) {
+        if (!activityId || !description || !price || !dateActivity) {
             return res.json({
                 success: false,
                 message: "No has completado todos los campos"
@@ -97,8 +104,8 @@ EventRouter.post("/newEvent",auth,async (req, res) => {
 })
 
 // ****MODIFICAR DATOS DEL EVENTO****
-EventRouter.put("/updateEvent/:eventId",auth,async (req, res) => {
-    
+EventRouter.put("/updateEvent/:eventId", auth, async (req, res) => {
+
     const {
         id
     } = req.user // Nos reconoce el usuario mediante el Tokken (auth.js)
@@ -116,7 +123,7 @@ EventRouter.put("/updateEvent/:eventId",auth,async (req, res) => {
         // *****Condición de si no eres el creador no puedes modificar*****
         let userCreateId = await Event.findById(eventId)
         console.log(userCreateId)
-        if(!userCreateId.userCreate == id){
+        if (!userCreateId.userCreate == id) {
             res.status(400).json({
                 success: false,
                 message: "No puedes modificar el evento porque no eres el creador"
@@ -144,39 +151,60 @@ EventRouter.put("/updateEvent/:eventId",auth,async (req, res) => {
 
 
 // ****BORRAMOS EVENTO*****
-EventRouter.delete("/deleteEvent/:eventId",auth,authAdmin,async (req, res) => {
+EventRouter.delete("/deleteEvent/:eventId", auth, authAdmin, async (req, res) => {
     const {
         eventId
     } = req.params
     try {
+
+        const event = await Event.findById(eventId)
+        const name = event.name
+
         await Event.findByIdAndDelete(eventId)
 
+        // *****Borramos el evento de File*****
         let fileList = []
         File.find({
             event: eventId
         }).then(file => {
-            file.map((searches) => {
-                console.log("funciona", searches)
-                fileList.push(searches.event)
-                console.log("funciona", searches.event)
+            file.map((searches) => {              
+                fileList.push(searches.event)           
                 Event.findByIdAndDelete(searches._id, function (err, searches) {
                     if (err) {
                         console.log(err, "error que no conozco")
                     } else {
-                        console.log("Eventos eliminados de File correctamente")
                         fileList.map((eventoId) => {
-                            console.log("eventoId", eventoId)
                             File.findByIdAndUpdate(eventoId, {
                                 $pull: {
                                     event: eventId
                                 }
                             })
                         })
+                        console.log("Eventos eliminados de File correctamente")
                     }
                 })
             })
         })
 
+        // *****Borramos las reservas de ese evento*****
+        let reserveList = []
+        Reserve.find({
+            event: eventId
+        }).then(reserve => {
+            reserve.map((searches) => {
+                reserveList.push(searches.event)
+                Reserve.findByIdAndDelete(searches._id, function (err, searches) {
+                    if (err) {
+                        console.log(err, "error que no conozco")
+                    } else {
+                        reserveList.map((reservaId) => {
+                            Reserve.findByIdAndDelete(reservaId)
+                        })
+                        console.log("Reservas de este evento eliminado correctamente")
+                    }
+                })
+            })
+        })
 
         return res.json({
             success: true,
