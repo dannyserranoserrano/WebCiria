@@ -24,7 +24,7 @@ const UpdateActivity = () => {
     // *****FUNCION PARA CREAR LA TABLA CON LOS DATOS ANTIGUOS*****
     useEffect(() => {
         const getActivity = async () => {
-            const response2 = await axios.get(`http://localhost:5000/api/findActivity/${activityId}`, {
+            const response2 = await axios.get(`/api/findActivity/${activityId}`, {
                 headers: {
                     "Authorization": token
                 }
@@ -54,7 +54,7 @@ const UpdateActivity = () => {
 
             try {
                 const response = await axios.put(
-                    `http://localhost:5000/api/updateActivity/${activityId}`,
+                    `/api/updateActivity/${activityId}`,
                     { ...updateActivity }, {
                     headers: {
                         "Authorization": token

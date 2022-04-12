@@ -19,7 +19,7 @@ const File = () => {
 
     useEffect(() => {
         const getFile = async () => {
-            const response = await axios.get(`http://localhost:5000/api/findFiles/${fileId}`, {
+            const response = await axios.get(`/api/findFiles/${fileId}`, {
                 headers: {
                     "Authorization": token
                 }
@@ -49,7 +49,7 @@ const File = () => {
 
             // *****Hacemos la llamada*****
             const response2 = await axios.delete(
-                `http://localhost:5000/api/deleteFile/${fileId}`, {
+                `/api/deleteFile/${fileId}`, {
                 headers: {
                     "Authorization": token
                 }

@@ -11,7 +11,7 @@ const TablaFiles = () => {
 
     useEffect(() => {
         const getFiles = async () => {
-            const response = await axios.get("http://localhost:5000/api/files", {
+            const response = await axios.get("/api/files", {
                 headers: {
                     "Authorization": token
                 }

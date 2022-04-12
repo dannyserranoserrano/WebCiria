@@ -24,7 +24,7 @@ const UpdateUser = () => {
     // *****FUNCION PARA CREAR LA TABLA CON LOS DATOS ANTIGUOS*****
     useEffect(() => {
         const getUser = async () => {
-            const response = await axios.get('http://localhost:5000/api/findUser', {
+            const response = await axios.get('/api/findUser', {
                 headers: {
                     "Authorization": token
                 }
@@ -54,7 +54,7 @@ const UpdateUser = () => {
             // *****Hacemos la llamada*****
             try {
                 const response = await axios.put(
-                    'http://localhost:5000/api/updateUser',
+                    '/api/updateUser',
                     { ...updateUser }, {
                     headers: {
                         "Authorization": token

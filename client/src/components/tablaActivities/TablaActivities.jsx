@@ -10,7 +10,7 @@ const TablaActivities = () => {
 
     useEffect(() => {
         const getActivities = async () => {
-            const response = await axios.get("http://localhost:5000/api/activities", {
+            const response = await axios.get("/api/activities", {
                 headers: {
                     "Authorization": token
                 }

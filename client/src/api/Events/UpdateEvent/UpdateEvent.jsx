@@ -31,7 +31,7 @@ const UpdateEvent = () => {
     // *****FUNCION PARA CREAR LA TABLA CON LOS DATOS ANTIGUOS*****
     useEffect(() => {
         const getEvent = async () => {
-            const response = await axios.get(`http://localhost:5000/api/findEvent/${eventId}`, {
+            const response = await axios.get(`/api/findEvent/${eventId}`, {
                 headers: {
                     "Authorization": token
                 }
@@ -46,7 +46,7 @@ const UpdateEvent = () => {
 
     useEffect(() => {
         const getUser = async () => {
-            const response3 = await axios.get('http://localhost:5000/api/findUser', {
+            const response3 = await axios.get('/api/findUser', {
                 headers: {
                     "Authorization": token
                 }
@@ -60,7 +60,7 @@ const UpdateEvent = () => {
     // ******BUSQUEDA DE ACTIVIDADES*****    
     useEffect(() => {
         const getActivities = async () => {
-            const response2 = await axios.get("http://localhost:5000/api/activities", {
+            const response2 = await axios.get("/api/activities", {
                 headers: {
                     "Authorization": token
                 }
@@ -91,7 +91,7 @@ const UpdateEvent = () => {
                 // *****Hacemos la llamada*****
 
                 const response = await axios.put(
-                    `http://localhost:5000/api/updateEvent/${eventId}`,
+                    `/api/updateEvent/${eventId}`,
                     { ...updateEvent }, {
                     headers: {
                         "Authorization": token
@@ -139,7 +139,7 @@ const UpdateEvent = () => {
                                 <div className="updateEventName">
                                     <label className="form-label">Nombre del Evento</label>
                                     <input type="text" name="name" className="form-control" id="validationDefault01" onChange={handleChange}
-                                        placeholder={event.name} required />
+                                        placehoder={event.name} required />
                                 </div>
                                 <div className="updateEventDescription">
                                     <label className="form-label">Descripción del Evento</label>

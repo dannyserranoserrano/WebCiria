@@ -23,7 +23,7 @@ const UpdateFile = () => {
     // *****FUNCION PARA CREAR LA TABLA CON LOS DATOS ANTIGUOS*****
     useEffect(() => {
         const getFile = async () => {
-            const response = await axios.get(`http://localhost:5000/api/findFiles/${fileId}`, {
+            const response = await axios.get(`/api/findFiles/${fileId}`, {
                 headers: {
                     "Authorization": token
                 }
@@ -53,7 +53,7 @@ const UpdateFile = () => {
             // *****Hacemos la llamada*****
 
             const response = await axios.put(
-                `http://localhost:5000/api/updateFile/${fileId}`,
+                `/api/updateFile/${fileId}`,
                 { ...updateFile }, {
                 headers: {
                     "Authorization": token

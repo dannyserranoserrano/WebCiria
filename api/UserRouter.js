@@ -195,8 +195,6 @@ UserRouter.put("/updateUser/:userId", auth, authAdmin, async (req, res) => {
     } = req.params
 
     const {
-        name,
-        surname,
         city,
         role
     } = req.body
@@ -204,22 +202,10 @@ UserRouter.put("/updateUser/:userId", auth, authAdmin, async (req, res) => {
     try {
 
         const user = await User.findById(userId)
+        const name = user.name
+        const surname = user.surname
         const email = user.email
         const password = user.password
-
-        if (name.length < 3) {
-            return res.status(400).json({
-                success: false,
-                message: "Nombre inválido"
-            })
-        }
-
-        if (surname.length < 2) {
-            return res.status(400).json({
-                success: false,
-                message: "Apellido inválido"
-            })
-        }
 
         let passwordHash = bcrypt.hashSync(password, 10)
 
@@ -234,8 +220,6 @@ UserRouter.put("/updateUser/:userId", auth, authAdmin, async (req, res) => {
         )
 
         await User.findByIdAndUpdate(userId, {
-            name,
-            surname,
             city,
             password: passwordHash,
             role
@@ -260,8 +244,6 @@ UserRouter.put("/updateUser", auth, async (req, res) => {
     } = req.user // Nos reconoce el usuario mediante el Tokken (auth.js)
 
     const {
-        name,
-        surname,
         city,
         password,
 
@@ -270,6 +252,8 @@ UserRouter.put("/updateUser", auth, async (req, res) => {
     try {
 
         const user = await User.findById(id)
+        const name = user.name
+        const surname = user.surname
         const email = user.email
 
 
@@ -277,20 +261,6 @@ UserRouter.put("/updateUser", auth, async (req, res) => {
             return res.status(400).json({
                 success: false,
                 message: "El Password debe contener 6 dígitos o más"
-            })
-        }
-
-        if (name.length < 3) {
-            return res.status(400).json({
-                success: false,
-                message: "Nombre inválido"
-            })
-        }
-
-        if (surname.length < 2) {
-            return res.status(400).json({
-                success: false,
-                message: "Apellido inválido"
             })
         }
 
@@ -346,7 +316,7 @@ UserRouter.delete("/deleteUser/:userId", auth, async (req, res) => {
             email,
         )
 
- // *****Funciones para borrar el usuario y todas sus reservas*****
+        // *****Funciones para borrar el usuario y todas sus reservas*****
         await User.findByIdAndDelete(userId)
         let reserveList = []
         Reserve.find({
@@ -358,7 +328,7 @@ UserRouter.delete("/deleteUser/:userId", auth, async (req, res) => {
                 console.log("funciona", reservas.participating)
                 Event.findByIdAndDelete(reservas._id, function (err, reservas) {
                     if (err) {
-                        console.log(err,"error eque no conozco")
+                        console.log(err, "error que no conozco")
                     } else {
                         console.log("Reservas eliminadas correctamente")
                         reserveList.map((reserveId) => {
@@ -373,6 +343,33 @@ UserRouter.delete("/deleteUser/:userId", auth, async (req, res) => {
                 })
             })
         })
+        let userCreateList = []
+        Event.find({
+            userCreate: userId
+        }).then(event => {
+            event.map((creador) => {
+                console.log("funciona", creador)
+                userCreateList.push(creador.userCreate)
+                console.log("funciona", creador.userCreate)
+                Event.findByIdAndDelete(creador._id, function (err, creador) {
+                    if (err) {
+                        console.log(err, "error que no conozco")
+                    } else {
+                        console.log("Creador del evento eliminado correctamente")
+                        userCreateList.map((userCreateId) => {
+                            console.log("userCreateId", userCreateId)
+                            Event.findByIdAndUpdate(userCreateId, {
+                                $pull: {
+                                    userCreate: userId
+                                }
+                            })
+                        })
+                    }
+                })
+            })
+        })
+
+
         return res.status(200).json({
             success: true,
             message: "El Usuario ha sido borrado"
@@ -409,7 +406,7 @@ UserRouter.delete("/deleteUser", auth, async (req, res) => {
             email,
         )
 
- // *****Funciones para borrar el usuario y todas sus reservas*****
+        // *****Funciones para borrar el usuario y todas sus reservas*****
         await User.findByIdAndDelete(id)
         let reserveList = []
         Reserve.find({
@@ -421,7 +418,7 @@ UserRouter.delete("/deleteUser", auth, async (req, res) => {
                 console.log("funciona", searches.participating)
                 Event.findByIdAndDelete(searches._id, function (err, searches) {
                     if (err) {
-                        console.log(err,"error eque no conozco")
+                        console.log(err, "error eque no conozco")
                     } else {
                         console.log("Reservas eliminadas correctamente")
                         reserveList.map((reserveId) => {
@@ -436,6 +433,37 @@ UserRouter.delete("/deleteUser", auth, async (req, res) => {
                 })
             })
         })
+
+        let userCreateList = []
+        Event.find({
+            userCreate: id
+        }).then(event => {
+            event.map((creador) => {
+                console.log("funciona", creador)
+                userCreateList.push(creador.userCreate)
+                console.log("funciona", creador.userCreate)
+                Event.findByIdAndDelete(creador._id, function (err, creador) {
+                    if (err) {
+                        console.log(err, "error que no conozco")
+                    } else {
+                        console.log("Creador del evento eliminado correctamente")
+                        userCreateList.map((userCreateId) => {
+                            console.log("userCreateId", userCreateId)
+                            Event.findByIdAndUpdate(userCreateId, {
+                                $pull: {
+                                    userCreate: id
+                                },
+                                $push: {
+                                    userCreate: "Usuario_No_existente"
+                                }
+                            })
+                        })
+                    }
+                })
+            })
+        })
+
+
         return res.status(200).json({
             success: true,
             message: "El Usuario ha sido borrado"

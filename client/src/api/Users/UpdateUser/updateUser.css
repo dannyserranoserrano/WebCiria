@@ -73,6 +73,11 @@
     margin-bottom: 12px;
 }
 
+.updateUserRole {
+    width: 250px;
+    margin-bottom: 12px;
+}
+
 .updateButtonsUser {
     margin-top: 15vh;
 }

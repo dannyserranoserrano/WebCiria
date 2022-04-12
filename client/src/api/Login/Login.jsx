@@ -29,7 +29,7 @@ const Login = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:5000/api/login',
+                '/api/login',
                 { ...userLogin })
             localStorage.setItem("token", response.data.token)
             localStorage.setItem("role", response.data.role)

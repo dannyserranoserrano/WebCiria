@@ -10,7 +10,7 @@ const TablaReserves = () => {
 
     useEffect(() => {
         const getReserves = async () => {
-            const response = await axios.get("http://localhost:5000/api/reserves", {
+            const response = await axios.get("/api/reserves", {
                 headers: {
                     "Authorization": token
                 }

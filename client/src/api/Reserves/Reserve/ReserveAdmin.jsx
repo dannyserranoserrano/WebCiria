@@ -16,7 +16,7 @@ const ReserveAdmin = () => {
 
     useEffect(() => {
         const getReserve = async () => {
-            const response = await axios.get(`http://localhost:5000/api/findReserve/${reserveId}`, {
+            const response = await axios.get(`/api/findReserve/${reserveId}`, {
                 headers: {
                     "Authorization": token
                 }
@@ -40,7 +40,7 @@ const ReserveAdmin = () => {
             // *****Hacemos la llamada*****
 
             const response2 = await axios.delete(
-                'http://localhost:5000/api/deleteReserve/:reserveId', {
+                '/api/deleteReserve/:reserveId', {
                 headers: {
                     "Authorization": token
                 }

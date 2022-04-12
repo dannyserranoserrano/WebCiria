@@ -17,7 +17,7 @@ const Event = () => {
 
     useEffect(() => {
         const getEvent = async () => {
-            const response = await axios.get(`http://localhost:5000/api/findEvent/${eventId}`, {
+            const response = await axios.get(`/api/findEvent/${eventId}`, {
                 headers: {
                     "Authorization": token
                 }
@@ -41,7 +41,7 @@ const Event = () => {
             // *****Hacemos la llamada*****
             try {
                 const response2 = await axios.post(
-                    `http://localhost:5000/api/newReserve/${eventId}`,
+                    `/api/newReserve/${eventId}`,
                     {}, {
                     headers: {
                         "Authorization": token
@@ -72,7 +72,7 @@ const Event = () => {
 
             // *****Hacemos la llamada*****
             const response2 = await axios.delete(
-                `http://localhost:5000/api/deleteEvent/${eventId}`, {
+                `/api/deleteEvent/${eventId}`, {
                 headers: {
                     "Authorization": token
                 }
@@ -94,7 +94,7 @@ const Event = () => {
         };
     };
     // ******EVENT UNLOGGED*****
-    const Eventos = () => (
+    const Evento = () => (
         <div className="event">
             <div className="header">
                 <Header />
@@ -138,7 +138,7 @@ const Event = () => {
         </div>
     )
     // ******EVENTS LOGGED*****
-    const EventosUser = () => (
+    const EventoUser = () => (
         <div className="event">
             <div className="header">
                 <Header />
@@ -198,7 +198,7 @@ const Event = () => {
     )
 
     // ******EVENTS ADMIN*****
-    const EventosAdmin = () => (
+    const EventoAdmin = () => (
         <div className="event">
             <div className="header">
                 <Header />
@@ -258,10 +258,10 @@ const Event = () => {
     )
 
     // *****Operacion ternaria multiple*****
-    let eventos = role == 0 ? EventosUser() : role == 1 ? EventosAdmin() : Eventos()
+    let evento = role == 0 ? EventoUser() : role == 1 ? EventoAdmin() : Evento()
     return (
         <div>
-            {eventos}
+            {evento}
         </div>
     )
 }

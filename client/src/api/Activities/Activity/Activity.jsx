@@ -14,7 +14,7 @@ const Activity = () => {
 
     useEffect(() => {
         const getActivity = async () => {
-            const response = await axios.get(`http://localhost:5000/api/findActivity/${activityId}`, {
+            const response = await axios.get(`/api/findActivity/${activityId}`, {
                 headers: {
                     "Authorization": token
                 }
@@ -35,7 +35,7 @@ const Activity = () => {
 
             // *****Hacemos la llamada*****
             const response2 = await axios.delete(
-                `http://localhost:5000/api/deleteActivity/${activityId}`, {
+                `/api/deleteActivity/${activityId}`, {
                 headers: {
                     "Authorization": token
                 }

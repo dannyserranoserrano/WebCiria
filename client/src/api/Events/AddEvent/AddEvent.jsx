@@ -23,7 +23,7 @@ const AddEvent = () => {
 
     useEffect(() => {
         const getActivity = async () => {
-            const response2 = await axios.get("http://localhost:5000/api/activities", {
+            const response2 = await axios.get("/api/activities", {
                 headers: {
                     "Authorization": token
                 }
@@ -48,7 +48,7 @@ const AddEvent = () => {
         try {
 
             const response = await axios.post(
-                'http://localhost:5000/api/newEvent',
+                '/api/newEvent',
                 { ...addEvent }, {
                 headers: {
                     "Authorization": token

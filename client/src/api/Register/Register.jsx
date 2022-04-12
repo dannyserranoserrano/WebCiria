@@ -34,7 +34,7 @@ const Register = () => {
         // *****Hacemos la llamada*****
         try {
             const response = await axios.post(
-                'http://localhost:5000/api/newUser',
+                '/api/newUser',
                 { ...userRegister })
             setSuccessMessage(response.data.message)
 

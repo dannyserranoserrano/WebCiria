@@ -15,7 +15,7 @@ const User = () => {
     useEffect(() => {
         const getUser = async () => {
             const response = await axios.get(
-                'http://localhost:5000/api/findUser', {
+                '/api/findUser', {
                 headers: {
                     "Authorization": token
                 }
@@ -37,7 +37,7 @@ const User = () => {
 
             // *****Hacemos la llamada*****
             const response2 = await axios.delete(
-                'http://localhost:5000/api/deleteUser', {
+                '/api/deleteUser', {
                 headers: {
                     "Authorization": token
                 }

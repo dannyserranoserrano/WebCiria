@@ -25,7 +25,7 @@ const AddFile = () => {
 
     useEffect(() => {
         const getEvents = async () => {
-            const response2 = await axios.get("http://localhost:5000/api/events", {
+            const response2 = await axios.get("/api/events", {
                 headers: {
                     "Authorization": token
                 }
@@ -55,7 +55,7 @@ const AddFile = () => {
             formData.append("file", file);
 
             //   setLoading(true);
-            const res = await axios.post(`http://localhost:5000/api/newFile`, formData,
+            const res = await axios.post(`/api/newFile`, formData,
                 {
                     headers: {
                         "content-type": "multipart/form-data",
@@ -81,7 +81,7 @@ const AddFile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const response = await axios.post(
-            'http://localhost:5000/api/newFile',
+            '/api/newFile',
             { ...addFile }, {
             headers: {
                 "Authorization": token

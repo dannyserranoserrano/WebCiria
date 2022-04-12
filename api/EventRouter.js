@@ -3,6 +3,7 @@ const express = require("express");
 const auth = require("../middleware/auth");
 const authAdmin = require("../middleware/authAdmin");
 const Event = require("../models/Event");
+const File = require("../models/File");
 const EventRouter = express.Router();
 
 // *****VISUALIZAMOS TODOS LOS EVENTOS*****
@@ -24,6 +25,8 @@ EventRouter.get("/findEvent/:eventId", async (req, res) => {
             path:"participating", select:"name surname"
         }).populate({
             path:"activity", select:"name pay"
+        }).populate({
+            path:"userCreate", select:"name surname"
         })
 
         if (!event) {
@@ -32,6 +35,7 @@ EventRouter.get("/findEvent/:eventId", async (req, res) => {
                 message: "Evento no encontrado"
             })
         }
+
         return res.status(200).json({
             success: true,
             event          
@@ -146,6 +150,34 @@ EventRouter.delete("/deleteEvent/:eventId",auth,authAdmin,async (req, res) => {
     } = req.params
     try {
         await Event.findByIdAndDelete(eventId)
+
+        let fileList = []
+        File.find({
+            event: eventId
+        }).then(file => {
+            file.map((searches) => {
+                console.log("funciona", searches)
+                fileList.push(searches.event)
+                console.log("funciona", searches.event)
+                Event.findByIdAndDelete(searches._id, function (err, searches) {
+                    if (err) {
+                        console.log(err, "error que no conozco")
+                    } else {
+                        console.log("Eventos eliminados de File correctamente")
+                        fileList.map((eventoId) => {
+                            console.log("eventoId", eventoId)
+                            File.findByIdAndUpdate(eventoId, {
+                                $pull: {
+                                    event: eventId
+                                }
+                            })
+                        })
+                    }
+                })
+            })
+        })
+
+
         return res.json({
             success: true,
             message: "El Evento ha sido borrado"

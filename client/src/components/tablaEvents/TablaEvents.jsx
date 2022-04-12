@@ -9,7 +9,7 @@ const TablaEvents = () => {
 
     useEffect(() => {
         const getEvents = async () => {
-            const response = await axios.get("http://localhost:5000/api/events",)
+            const response = await axios.get("/api/events",)
             console.log(response);
             setEvents(response.data.events);
         }
