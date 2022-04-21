@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import Header from '../../../components/header/Header';
-import Upload from './Upload';
 import "./addFile.css"
 
 
@@ -14,7 +13,7 @@ const AddFile = () => {
         description: "",
         date: "",
         event: "",
-        file: "",
+        image: "",
     });
 
     const [events, setEvents] = useState([])
@@ -41,60 +40,31 @@ const AddFile = () => {
             ...addFile,
             [e.target.name]: e.target.value,
         })
+        console.log(addFile);
     };
-
-    const handleUpload = async (e) => {
-        try {
-
-            const file = e.target.files[0];
-            if (!file) return alert("No se ha subido ningún archivo");
-            if (file.size > 4024 * 4024 * 2) return alert("Archivo demasiado grande");
-            if (file.type !== "image/jpeg" && file.type !== "image/png") return alert("Formato de archivo no soportado");
-
-            let formData = new FormData();
-            formData.append("file", file);
-
-            //   setLoading(true);
-            const res = await axios.post(`/api/newFile`, formData,
-                {
-                    headers: {
-                        "content-type": "multipart/form-data",
-                        "Authorization": token,
-                    },
-                }
-            )
-
-            setSuccessMessage(res.data.message)
-            setTimeout(() => {
-                navigate('/files')
-            }, 2000)
-
-        } catch (err) {
-            setErrorMessage(err.data.message)
-            setTimeout(() => {
-                window.location.href = "/files/addFile"
-            }, 2000)
-        }
-    }
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await axios.post(
-            '/api/newFile',
-            { ...addFile }, {
-            headers: {
-                "Authorization": token
-            }
-        })
+        let form = new FormData(e.target);
+
 
         try {
+
+            const response = await axios.post(
+                '/api/newFile', form,
+                { ...addFile }, {
+                headers: {
+                    "Authorization": token,
+                    'content-type': 'text/json'
+                }
+            })
+
             setSuccessMessage(response.data.message)
             setTimeout(() => {
                 navigate('/files')
             }, 2000)
         } catch (error) {
-            setErrorMessage(response.error.data.message)
+            setErrorMessage(error.response.data.message)
             setTimeout(() => {
                 window.location.href = "/files/addFile"
             }, 2000)
@@ -138,7 +108,12 @@ const AddFile = () => {
                             <label className="form-label ms-5">Fecha de la imágen</label>
                             <input type="date" className="form-control" name="date" onChange={handleChange} />
                         </div>
-                        
+
+                        <div className='addFileImage'>
+                            <label className="form-label ms-5">Añadir Imágen</label>
+                            <input type="file" className="form-control" name="image" onChange={handleChange} />
+                        </div>
+
                     </div>
                     {/* *****AVISOS DE ERRORES***** */}
                     <div className="message_ok shadow-lg p-1 bg-body rounded border" style={{ display: successMessage ? "block" : "none" }}>
@@ -167,12 +142,6 @@ const AddFile = () => {
                         </div>
                     </div>
                 </form >
-
-                <div>
-                    <div className='addFileImage'>
-                    <Upload />
-                    </div>
-                </div>
             </div>
         </div >
     )

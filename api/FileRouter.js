@@ -32,9 +32,11 @@ FileRouter.get("/findFiles/:fileId", auth, async (req, res) => {
     } = req.params
     try {
         let file = await File.findById(fileId).populate({
-            path:"event", select:"name dateActivity"
+            path: "event",
+            select: "name dateActivity"
         }).populate({
-            path:"user", select:"name surname"
+            path: "user",
+            select: "name surname"
         })
         if (!file) {
             return res.status(400).json({
@@ -47,7 +49,7 @@ FileRouter.get("/findFiles/:fileId", auth, async (req, res) => {
             file
         })
     } catch (error) {
-       return res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: error.message
         })
@@ -55,58 +57,58 @@ FileRouter.get("/findFiles/:fileId", auth, async (req, res) => {
 })
 
 // *****CREAMOS NUEVO ARCHIVO*****
-FileRouter.post("/newFile",auth,async (req, res) => {
+FileRouter.post("/newFile", auth, async (req, res) => {
     const {
         id
-     } = req.user // Nos reconoce el usuario mediante el Tokken (auth.js)
+    } = req.user // Nos reconoce el usuario mediante el Tokken (auth.js)
     const {
         fileName,
         description,
         date,
         event
     } = req.body
-    const file = req.files.file
 
-    console.log(file)
+    try { 
+         if (!req.files || Object.keys(req.files.file).length === 0)
+            return res.status(400).json({
+                success: false,
+                message: 'No has seleccionado ningun archivo'
+            })
 
-    try {
+        const file = req.files.file;
+
         if (!fileName || !date) {
             return res.status(400).json({
                 success: false,
                 message: "No has completado todos los campos"
             })
         }
-    
-
-        if (!req.files || Object.keys(req.files).length === 0)
-            return res.status(400).json({
-                success:false,
-                message: 'No has seleccionado ningun archivo'
-            })
-
+       
         if (file.size > 4000 * 3000) {
             removeTmp(file.tempFilePath)
             return res.status(400).json({
-                success:false,
+                success: false,
                 message: 'El archivo es demasiado grande'
             })
         }
         if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
             removeTmp(file.tempFilePath)
             return res.status(400).json({
-                success:false,
+                success: false,
                 message: "Formato de archivo incorrecto."
             })
         }
 
         let newFile = await cloudinary.v2.uploader.upload(file.tempFilePath, {
-            folder: "filesUpload"
-        }, async (err, result) => {
+            folder: "filesUpload",
+        });
+         removeTmp(file.tempFilePath);
+         async (err, result) => {
             if (err) throw err;
-            removeTmp(file.tempFilePath)
-        })
+            removeTmp(file.tempFilePath);
+        };
 
-        let fileImg = new File({
+        let fileImg = await File.create({
             fileName,
             description,
             date,
@@ -116,7 +118,7 @@ FileRouter.post("/newFile",auth,async (req, res) => {
             },
             user: id,
             event
-        })
+        });
 
         // *****CONFIRMACION GUARDADO*****
         await fileImg.save()
@@ -133,7 +135,7 @@ FileRouter.post("/newFile",auth,async (req, res) => {
 })
 
 // ****MODIFICAR DATOS DEL ARCHIVO*****
-FileRouter.put("/updateFile/:fileId",auth,async (req, res) => {
+FileRouter.put("/updateFile/:fileId", auth, async (req, res) => {
     const {
         fileId
     } = req.params
@@ -161,27 +163,31 @@ FileRouter.put("/updateFile/:fileId",auth,async (req, res) => {
 })
 
 // ****BORRAMOS DATOS*****
-FileRouter.delete("/deleteFile/:fileId",auth,authAdmin,async (req, res) => {
+FileRouter.delete("/deleteFile/:fileId", auth, authAdmin, async (req, res) => {
 
-try {
-    const{fileId} = req.params
-    // const{public_id} = req.body
-    // if (!public_id) {
-    //     return res.status(400).json({
-    //       success: false,
-    //       message: "No se han seleccionado imagenes",
-    //     });
-    //   }
-      
-    await File.findByIdAndDelete(fileId)
-    // cloudinary.v2.uploader.destroy(public_id, async (err, result) => {
-    //     if (err) throw err;
-    //   });
-  
-      return res.status(200).json({
-        success: true,
-        message: "Archivo eliminado correctamente",
-      });
+    try {
+        const {
+            fileId
+        } = req.params
+        const {
+            public_id
+        } = req.body
+        if (!public_id) {
+            return res.status(400).json({
+                success: false,
+                message: "No se han seleccionado imagenes",
+            });
+        }
+
+        await File.findByIdAndDelete(fileId)
+        cloudinary.v2.uploader.destroy(public_id, async (err, result) => {
+            if (err) throw err;
+        });
+
+        return res.status(200).json({
+            success: true,
+            message: "Archivo eliminado correctamente",
+        });
 
 
     } catch (error) {
