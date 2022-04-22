@@ -1,16 +1,16 @@
-# **keD@MOS???**
+# **CIRIA (Aplicación para gestión de eventos keD@MOS???)**
 ## **Descripción del proyecto.**
-* En este proyecto intento abarcar diferentes aplicaciones, todas unidas en un espacio comun donde cualquier usuario sin  necesidad de login pueda acceder y consultar la información principal y su galería de imágenes y videos, pero que contenga mucho más una vez logueado. 
-* La primera aplicación consistirá en un espacio donde los usuarios logueados podrán crear nuevos eventos puntuales para que quien lo desee pueda inscribirse y participar. En él, podran decidir el tipo de actividad a realizar, desde una ruta senderista, paseo en bici, comidas o cenas populares, etc. En dicho evento, se podran introducir imágenes que despues se  visualizarán, por ejemplo si se realiza de nuevo esa ruta como información, o si se desea visualizar en un futuro a modo de album multimedia. El usuario receptor recibirá el aviso del nuevo evento para poder inscribirse, previamente debería haberse suscrito a las notificaciones. En caso de que dicha actividad fuese de pago, que pueda realizarlo mediante un sistema como  tarjeta, bizum, etc.
+* En este proyecto intento abarcar diferentes aplicaciones, todas unidas en un espacio comun donde cualquier usuario sin  necesidad de login pueda acceder y consultar la información principal así como su galería de imágenes, pero que contenga mucho más una vez logueado. 
+* La primera aplicación consistirá en un espacio donde los usuarios logueados podrán crear nuevos eventos puntuales para que quien lo desee pueda inscribirse y participar. En él, podran decidir el tipo de actividad a realizar, desde una ruta senderista, paseo en bici, comidas o cenas populares, etc. En dicho evento, se podran introducir imágenes que despues se  visualizarán, por ejemplo si se realiza de nuevo esa ruta como información, o si se desea visualizar en un futuro a modo de album multimedia. En caso de que dicha actividad fuese de pago, que pueda realizarlo mediante un sistema como  tarjeta, paypal, etc.
 
 ## Relación entre Modelos.
 <img src="/images/Relación entre modelos.jpg" style="width: 800px;" alt="relacion entre modelos">
 
 ## Esquema estructural de la web
-<img src="/images/Diagrama_Proyecto3.png" style="width: 800px;" alt="relacion entre modelos">
+<img src="/images/Diagrama_Proyecto3.png" style="width: 800px;" alt="Esquema estructural de la web">
 
 ## Tecnologias empleadas
-<img src="/images/" alt="relacion entre modelos">
+<img src="/images/GrupoLogos.png" style="width: 800px;" alt="Tecnologías empleadas">
 
 ## Caracteristicas de la Aplicación.
 
