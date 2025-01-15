@@ -19,7 +19,7 @@ const TablaUsers = () => {
             setUsers(response.data.users);
         }
         getUsers();
-    }, []);
+    }, [token]);
 
 
     return (

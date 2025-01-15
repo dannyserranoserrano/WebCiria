@@ -3,8 +3,8 @@ const fileUpload = require("express-fileupload")
 const mongoose = require("mongoose");
 const app = express();
 require("dotenv").config();
-const cors = require ("cors")
-const path = require ("path")
+const cors = require("cors")
+const path = require("path")
 
 const UserRouter = require("./api/UserRouter")
 const FileRouter = require("./api/FileRouter")
@@ -40,7 +40,7 @@ mongoose.connect(URL, {}).then(() => {
     console.log(error)
 })
 
-if(process.env.NODE_ENV === 'production'){
+if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'))
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
