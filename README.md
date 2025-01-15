@@ -83,6 +83,6 @@
             - **Activity**
 
 * *CARPETA **MIDDLEWARE***
-    * Aqui guardamos los archivos relacionados con la creacción del **Token de Autentificación** para acceder como usuarios, así como la creación del role de **Admiinistrador**
+    * Aqui guardamos los archivos relacionados con la creacción del **Token de Autentificación** para acceder como usuarios, así como la creación del role de **Administrador**
             - **auth**
             - **authAdmin**

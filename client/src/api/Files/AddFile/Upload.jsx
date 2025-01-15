@@ -4,7 +4,7 @@ import React, { useState } from "react";
 const Upload = () => {
   const [images, setImages] = useState(false);
   const [loading, setLoading] = useState(false);
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem("token");
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -28,43 +28,42 @@ const Upload = () => {
         {
           headers: {
             "content-type": "multipart/form-data",
-            "Authorization": token
+            Authorization: token,
           },
         }
       );
-      
+
       setLoading(false);
       setImages({
-          
         data: res.data,
         url: res.data.newFile.secure_url,
         id: res.data.newFile.public_id,
       });
-        console.log(res.data);
+      console.log(res.data);
     } catch (err) {
       alert(err.message);
     }
   };
-//   const handleDelete = async (e) => {
-//     e.preventDefault();
-//     try {
-//       setLoading(true);
-//       await axios.post(
-//         `http://localhost:5000/post/deletePost`,
-//         { public_id: images.id },
-//         {
-//           headers: {
-//             token: window.sessionStorage.token,
-//           },
-//         }
-//       );
-//       setLoading(false);
+  //   const handleDelete = async (e) => {
+  //     e.preventDefault();
+  //     try {
+  //       setLoading(true);
+  //       await axios.post(
+  //         `http://localhost:5000/post/deletePost`,
+  //         { public_id: images.id },
+  //         {
+  //           headers: {
+  //             token: window.sessionStorage.token,
+  //           },
+  //         }
+  //       );
+  //       setLoading(false);
 
-//       setImages(false);
-//     } catch (err) {
-//       alert(err.message);
-//     }
-//   };
+  //       setImages(false);
+  //     } catch (err) {
+  //       alert(err.message);
+  //     }
+  //   };
 
   console.log(images);
 
@@ -72,7 +71,8 @@ const Upload = () => {
   //   display: images ? "block" : "none",
   // };
 
-  const defaultImage = "https://st3.depositphotos.com/19428878/36349/v/600/depositphotos_363499050-stock-illustration-default-avatar-profile-vector-user.jpg"
+  const defaultImage =
+    "https://st3.depositphotos.com/19428878/36349/v/600/depositphotos_363499050-stock-illustration-default-avatar-profile-vector-user.jpg";
 
   return (
     <div>

@@ -66,7 +66,7 @@ const ReserveAdmin = () => {
             <div className="header">
                 <Header />
             </div>
-            <div className="container">
+            <div className="container centerReserve">
                 <div className="reserveTitle text-center mt-3"><p>RESERVAadmin</p></div>
                 <div className="container tablaReserve">
                     <div className="headReserve">

@@ -8,7 +8,7 @@
 }
 
 .headUsers {
-    max-height: 500px;
+    max-height: 220px;
 }
 
 .head2Users {
@@ -23,11 +23,6 @@
     text-decoration: none;
 }
 
-.bodyUsers {
-    display: flex;
-    justify-content: center;
-}
-
 .link2Users {
     display: flex;
     justify-content: space-between;
@@ -37,10 +32,6 @@
     
     .tablaUsers {
         border: 1px solid black;
-    }
-
-    .headUsers {
-        max-height: 300px;
     }
 
     .head2Users {

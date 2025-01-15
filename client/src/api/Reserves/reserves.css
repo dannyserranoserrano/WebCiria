@@ -10,14 +10,18 @@
     height: auto;
 }
 
+.centerReserves {
+    padding: 10px;
+}
+
 .reservesTitle {
-    margin-top: 40px;
+    margin-top: 30px;
     font-size: 40px;
 }
 
 .reservesTable {
-    margin-top: 150px;
-    width: 700px;
+    margin-top: 60px;
+    width: 600px;
 }
 
 .reservesButtons {
@@ -25,24 +29,23 @@
 }
 
 @media only screen and (max-width:767px) {
-    .reserves {
-        margin-top: 2px;
+    .centerReserves {
+        padding-bottom: 185px;
     }
 
     .reservesTitle {
         margin-top: 10px;
-        font-size: 30px;
+        font-size: 20px;
     }
 
     .reservesTable {
-        margin-top: 100px;
-       width: auto;
-        
+        margin-top: 70px;
+        max-width: 350px;
+
     }
 
     .reservesButtons {
         margin-top: 9vh;
-        margin-bottom: 10px;
     }
 
 }

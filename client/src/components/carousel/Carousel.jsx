@@ -29,7 +29,7 @@ const Carousel = () => {
             <div id="carouselExampleFade" className="col-auto carrusel carousel slide carousel-fade w-100" data-bs-ride="carousel">
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                        <img src="./images/DSC_0477.JPG" className="d-block w-100" alt="Principal" />
+                        <img src="./images/DSC_0477.JPG" className="imagen d-block w-100" alt="Principal" />
                     </div>
                     {files.map(e => (
                         <div key={e._id} className="carousel-item">

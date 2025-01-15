@@ -58,9 +58,7 @@ EventRouter.get("/findEvent/:eventId", async (req, res) => {
 // *****CREAMOS NUEVOS EVENTOS*****
 EventRouter.post("/newEvent", auth, async (req, res) => {
 
-    const {
-        id
-    } = req.user // Nos reconoce el usuario mediante el Tokken (auth.js)
+    const { id } = req.user // Nos reconoce el usuario mediante el Tokken (auth.js)
     const {
         activityId,
         name,
@@ -68,8 +66,9 @@ EventRouter.post("/newEvent", auth, async (req, res) => {
         price,
         dateActivity,
     } = req.body
+
     try {
-        // *****CREAMOS ERRORES*****
+        // *****COMPROBAMOS ERRORES*****
         if (!activityId || !description || !price || !dateActivity) {
             return res.json({
                 success: false,
@@ -175,8 +174,8 @@ EventRouter.delete("/deleteEvent/:eventId", auth, authAdmin, async (req, res) =>
                     } else {
                         fileList.map((eventoId) => {
                             File.findByIdAndUpdate(eventoId, {
-                                $pull: {
-                                    event: eventId
+                                $push: {
+                                    event: "nulo"
                                 }
                             })
                         })

@@ -12,14 +12,14 @@ const Reserves = () => {
             <div className="header">
                 <Header />
             </div>
-            <div className="container">
+            <div className="container centerReserves">
                 <div className="reservesTitle text-center"><h1>RESERVAS</h1></div>
                 <div className="container reservesTable">
                     <TablaReserves />
                 </div>
                 {/* *****Buttons***** */}
                 <div className="container reservesButtons">
-                    <div className="row justify-content-end">
+                    <div className="row justify-content-start">
                         <div className="addReserves col-auto">
                             <Link className="btn btn-sm btn-primary " type="button" to="/">Volver</Link>
                         </div>

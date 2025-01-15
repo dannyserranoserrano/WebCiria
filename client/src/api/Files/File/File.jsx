@@ -12,7 +12,7 @@ const File = () => {
     const [event, setEvent] = useState({});
     const [user, setUser] = useState([]);
     const role = localStorage.getItem("role")
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem("token")
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
 
@@ -29,12 +29,13 @@ const File = () => {
             setImage(response.data.file.image)
             setFile(response.data.file);
             setEvent(response.data.file.event);
+            if (setEvent.name == null) { new setEvent("Nulo") }
             setUser(response.data.file.user);
 
 
         }
         getFile()
-    }, [])
+    }, [fileId, token])
 
     // *****FUNCION PARA BORRAR*****
     const deleteFile = async (e) => {
@@ -68,6 +69,9 @@ const File = () => {
             }
         };
     };
+
+    // let evento = (event.name) == null ? "nulo" : {(event.name)}
+
     // ******FILES UNLOGGED*****
     const imageUnlogged = () => (
         <div className="file">
@@ -104,7 +108,7 @@ const File = () => {
                         <div className="reqfile"><strong>Nombre:</strong> {file.fileName}</div>
                         <div className="reqfile"><strong>Descripción:</strong> {file.description}</div>
                         <div className="reqfile"><strong>Fecha</strong> {new Date(file.date).toLocaleDateString("es")}</div>
-                        <div className="reqfile"><strong>Evento:</strong> {event.name}</div>
+                        {/* <div className="reqfile"><strong>Evento:</strong> {evento}</div> */}
                         <div className="reqfile"><strong>Usuario:</strong> {user.name} {user.surname}</div>
                     </div>
                 </div>
@@ -177,6 +181,7 @@ const File = () => {
     )
 
     // *****Operacion ternaria multiple*****
+    // eslint-disable-next-line eqeqeq
     let galeria = role == 0 ? imageUser() : role == 1 ? imageAdmin() : imageUnlogged()
     return (
         <div>

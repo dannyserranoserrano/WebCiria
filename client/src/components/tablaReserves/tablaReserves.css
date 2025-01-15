@@ -27,7 +27,9 @@
 display: flex;
 justify-content:space-between;
 }
+
 @media only screen and (max-width:767px) {
+    
     .tablaReserves {
         border: 1px solid black;
     }

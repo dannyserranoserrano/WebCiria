@@ -36,37 +36,70 @@ ReserveRouter.get("/reserves", auth, authAdmin, async (req, res) => {
     }
 })
 
-// // *****VISUALIZAMOS NUESTRA RESERVA*****
-// ReserveRouter.get("/findReserve", auth, async (req, res) => {
-//     const {
-//         id
-//     } = req.user
-//     try {
-//         let reserve = await Reserve.findById(id).populate({
-//             path: "participating",
-//             select: "name surname"
-//         }).populate({
-//             path: "event",
-//             select: "name"
-//         })
-//         if (!reserve) {
-//             res.json({
-//                 success: false,
-//                 message: "Reserva no encontrada"
-//             })
-//         }
-//         return res.json({
-//             success: true,
-//             message: "Reserva encontrada",
-//             reserve
-//         })
-//     } catch (error) {
-//         res.json({
-//             success: false,
-//             message: error.message
-//         })
-//     }
-// })
+// *****VISUALIZAMOS NUESTRA RESERVA*****
+
+ReserveRouter.get("/findReserve", auth, async (req, res) => {
+    
+    const {
+        id
+    } = req.user
+    try {
+        // *****Buscar mis reservas (Como participante)*****
+        
+        // let reserves = await Reserve.find({}).populate({
+        //     path: "participating",
+        //     select: "_id"
+        // })
+        let reserveList = []
+        await Reserve.find({
+            participating: id
+        }).then(reserve => {
+            reserve.map((reservas) => {
+                console.log("funciona", reservas)
+                reserveList.push(reservas.participating)
+                console.log("funciona", reservas.participating)
+            })
+            console.log(reserveList)
+            reserveList
+        })
+        
+
+        return res.json({
+            success: true,
+            reserveList
+        })
+
+
+
+
+
+
+
+        //         let reserve = await Reserve.findById(id).populate({
+        //             path: "participating",
+        //             select: "name surname"
+        //         }).populate({
+        //             path: "event",
+        //             select: "name"
+        //         })
+        //         if (!reserve) {
+        //             res.json({
+        //                 success: false,
+        //                 message: "Reserva no encontrada"
+        //             })
+        //         }
+        //         return res.json({
+        //             success: true,
+        //             message: "Reserva encontrada",
+        //             reserve
+        //         })
+    } catch (error) {
+        res.json({
+            success: false,
+            message: error.message
+        })
+    }
+})
 
 // *****VISUALIZAMOS SOLO UNA RESERVA*****
 ReserveRouter.get("/findReserve/:reserveId", auth, async (req, res) => {
@@ -125,7 +158,7 @@ ReserveRouter.post("/newReserve/:eventId", auth, async (req, res) => {
         })
 
         console.log(id)
-        let findUser = await findEvent.participating.find(user => user._id.equals(id))//Comprueba si el usuario ya está registrado
+        let findUser = await findEvent.participating.find(user => user._id.equals(id)) //Comprueba si el usuario ya está registrado
 
         if (findUser) {
             return res.json({

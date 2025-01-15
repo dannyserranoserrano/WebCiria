@@ -11,51 +11,51 @@ const Home = () => {
     // ******INDEX UNLOGGED*****
     const Index = () => (
         <div className='index'>
-            <div className="header">
+            <nav className="header">
                 <Header />
-            </div>
-            <div className="container home">
+            </nav>
+            <section className="container home">
                 <div className="container eventsIndex w-100">
                     <TablaEvents />
                 </div>
                 <div className="container carruselIndex">
                     <Carousel />
                 </div>
-            </div>
+            </section>
         </div>
     )
 
     // *****INDEX USER*****
     const IndexUser = () => (
         <div className='index'>
-            <div className="header">
+            <nav className="header">
                 <Header />
-            </div>
-            <div className="container home">
+            </nav>
+            <section className="container home">
                 <div className="container eventsIndex w-100">
                     <TablaEvents />
                 </div>
                 <div className="container carruselIndex">
                     <Carousel />
                 </div>
-            </div>
+            </section>
         </div>
     )
 
     // *****INDEX ADMIN*****
     const IndexAdmin = () => (
         <div className='index'>
-            <div className="header">
+            <nav className="header">
                 <Header />
-            </div>
-            <div className="container home">
+            </nav>
+            <section className="container home">
                 <div className="container eventsIndex w-100">
                     <TablaEvents />
                 </div>
                 <div className="container carruselIndex">
                     <Carousel />
                 </div>
-            </div>
+            </section>
         </div>
     )
 

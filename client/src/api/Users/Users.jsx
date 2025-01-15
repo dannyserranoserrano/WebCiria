@@ -19,7 +19,7 @@ const Users = () => {
                 </div>
                 {/* *****Buttons***** */}
                 <div className="container usersButtons">
-                    <div className="row justify-content-end">
+                    <div className="row justify-content-start">
                         <div className="volverUser col-auto">
                             <Link className="btn btn-primary " type="button" to="/">Volver</Link>
                         </div>

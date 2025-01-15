@@ -420,7 +420,7 @@ UserRouter.delete("/deleteUser", auth, async (req, res) => {
                 console.log("funciona", searches.participating)
                 Event.findByIdAndDelete(searches._id, function (err, searches) {
                     if (err) {
-                        console.log(err, "error eque no conozco")
+                        console.log(err, "error que no conozco")
                     } else {
                         console.log("Reservas eliminadas correctamente")
                         reserveList.map((reserveId) => {

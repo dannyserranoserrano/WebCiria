@@ -20,12 +20,10 @@ const FileSchema = new mongoose.Schema({
     user: {
         type: mongoose.Types.ObjectId,
         ref: "User",
-
     },
     event: {
         type: mongoose.Types.ObjectId,
         ref: "Event",
-
     }
 }, {
     timestamps: true

@@ -20,18 +20,18 @@
 }
 
 .usersTable {
-    margin-top: 60px;
+    margin-top: 20px;
     max-width: 600px;
 }
 
 .usersButtons {
-    margin-top: 5vh;
+    margin-top: 1vh;
 }
 
 @media only screen and (max-width:767px) {
 
     .centerUsers{
-        padding: 5px;
+        padding-bottom: 55px;
     }
 
     .usersTitle {

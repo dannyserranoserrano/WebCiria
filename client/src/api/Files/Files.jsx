@@ -50,14 +50,15 @@ const Files = () => {
                 {/* *****Buttons***** */}
                 <div className="container filesButtons">
                     <div className=" row justify-content-between">
+                         <div className="col-auto">
+                            <Link className="btn btn-primary" type="button" to="/">Volver</Link>
+                        </div>
                         <div className="btn-group col-auto ">
                             <div className="addFiles">
                                 <Link className="btn btn-success" type="button" to="/files/addFile" disabled>Añadir Imagen</Link>
                             </div>
                         </div>
-                        <div className="col-auto">
-                            <Link className="btn btn-primary" type="button" to="/">Volver</Link>
-                        </div>
+                       
                     </div>
                 </div>
             </div>

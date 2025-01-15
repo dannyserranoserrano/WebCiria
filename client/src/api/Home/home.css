@@ -9,7 +9,7 @@
 }
 
 .home {
-    padding: 40px;  
+    padding: 40px;
     height: auto;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .carruselIndex {
-    max-width: 1200px;
+    max-width: 1000px;
 }
 
 @media only screen and (max-width:767px) {
@@ -33,15 +33,14 @@
         margin-top: 10px
     }
 
-
-.home {
-    padding: 5px;  
-}
-
+    .home {
+        padding: 5px;
+    }
 
     .eventsIndex {
         width: 370px;
     }
+
     .carruselIndex {
         max-width: auto;
         margin-bottom: 50px;

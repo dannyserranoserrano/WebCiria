@@ -7,22 +7,22 @@ import axios from "axios";
 
 const Reserve = () => {
 
-    const [reserve_id, setReserve_id] = useState({})
+    const [reserve, setReserve] = useState({})
     const [event, setEvent] = useState({})
     const [participating, setParticipating] = useState({})
     const token = localStorage.getItem('token')
-    const [successMessage, setSuccessMessage] = useState(null);
-    const [errorMessage, setErrorMessage] = useState(null);
+    // const [successMessage, setSuccessMessage] = useState(null);
+    // const [errorMessage, setErrorMessage] = useState(null);
 
     useEffect(() => {
         const getReserve = async () => {
-            const response = await axios.get(`/api/findReserve/${reserve_id}`, {
+            const response = await axios.get('/api/findReserve', {
                 headers: {
                     "Authorization": token
                 }
             })
             console.log(response);
-            setReserve_id(response.data.reserve._id);
+            setReserve(response.data.reserve);
             setEvent(response.data.reserve.event);
             setParticipating(response.data.reserve.participating);
 
@@ -30,38 +30,38 @@ const Reserve = () => {
         getReserve()
     }, [])
 
-    // *****FUNCION PARA BORRAR*****
-    const deleteReserve = async (e) => {
-        e.preventDefault();
+    // // *****FUNCION PARA BORRAR*****
+    // const deleteReserve = async (e) => {
+    //     e.preventDefault();
 
-        // *****Confirmación*****
-        let option = window.confirm("Seguro que quieres eliminar esta Reserva???")
-        if (option === true) {
+    //     // *****Confirmación*****
+    //     let option = window.confirm("Seguro que quieres eliminar esta Reserva???")
+    //     if (option === true) {
 
-            // *****Hacemos la llamada*****
+    //         // *****Hacemos la llamada*****
 
-            const response2 = await axios.delete(
-                `/api/deleteReserve/${reserve_id}`, {
-                headers: {
-                    "Authorization": token
-                }
-            })
-            try {
+    //         const response2 = await axios.delete(
+    //             `/api/deleteReserve/${reserve_id}`, {
+    //             headers: {
+    //                 "Authorization": token
+    //             }
+    //         })
+    //         try {
 
-                setSuccessMessage(response2.data.message)
+    //             setSuccessMessage(response2.data.message)
 
-                setTimeout(() => {
-                    window.location.href = '/'
-                }, 2000)
+    //             setTimeout(() => {
+    //                 window.location.href = '/'
+    //             }, 2000)
 
-            } catch (error) {
-                setErrorMessage(response2.data.error.message)
-                setTimeout(() => {
-                    window.location.href = '/user'
-                }, 2000)
-            }
-        };
-    };
+    //         } catch (error) {
+    //             setErrorMessage(response2.data.error.message)
+    //             setTimeout(() => {
+    //                 window.location.href = '/user'
+    //             }, 2000)
+    //         }
+    //     };
+    // };
     return (
         <div className=" reserve">
             <div className="header">
@@ -77,7 +77,7 @@ const Reserve = () => {
                 </div>
 
                 {/* *****AVISOS DE ERRORES***** */}
-                <div className="message_ok shadow-lg p-3 m-3 bg-body rounded border text-center" style={{ display: successMessage ? "block" : "none" }}>
+                {/* <div className="message_ok shadow-lg p-3 m-3 bg-body rounded border text-center" style={{ display: successMessage ? "block" : "none" }}>
                     <div>
                         {successMessage}
                     </div>
@@ -86,7 +86,7 @@ const Reserve = () => {
                     <div>
                         {errorMessage}
                     </div>
-                </div>
+                </div> */}
 
                 {/* *****Buttons***** */}
                 <div className="container reserveButtons mb-3">
@@ -96,7 +96,7 @@ const Reserve = () => {
                     <div className="btn-group btn-group-sm col-auto ">
                         <button className="btn btn-warning" type="submit" >Modificar
                         </button>
-                        <button className="btn btn-danger" onClick={deleteReserve}>Borrar </button>
+                        {/* <button className="btn btn-danger" onClick={deleteReserve}>Borrar </button> */}
                     </div>
 
                 </div>
